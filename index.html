@@ -1,40 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Irecarga | Recargas de Free Fire</title>
+    <title>Irecarga | Recargas Free Fire</title>
     <style>
-        /* Estilos Base y Variables */
         :root {
             --bg-color: #000000;
             --text-color: #ffffff;
             --primary-border: #000080; /* Azul Marino */
             --accent-glow: 0 0 15px rgba(0, 0, 128, 0.7);
             --card-bg: #0a0a0a;
+            --success: #00ff88;
+            --support-red: #ff4444;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
         }
 
-        /* Encabezado */
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             padding: 20px;
             width: 100%;
             max-width: 600px;
@@ -43,29 +38,8 @@
             border-radius: 0 0 20px 20px;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 4px var(--primary-border);
-        }
+        .container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 25px; }
 
-        header p {
-            color: #aaaaaa;
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-        /* Contenedor Principal */
-        .container {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        /* Secciones (Pasos) */
         .step-section {
             background-color: var(--card-bg);
             border: 2px solid var(--primary-border);
@@ -74,215 +48,131 @@
             box-shadow: var(--accent-glow);
         }
 
-        .step-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
+        .step-title { font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-weight: bold; text-transform: uppercase; }
 
         .step-number {
             background-color: var(--primary-border);
-            color: white;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            font-weight: bold;
-            font-size: 0.9rem;
+            width: 25px; height: 25px;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 50%; font-size: 0.8rem;
         }
 
-        /* Inputs */
         input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            background-color: #111;
-            border: 1px solid var(--primary-border);
-            color: var(--text-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
+            width: 100%; padding: 15px;
+            background-color: #111; border: 1px solid var(--primary-border);
+            color: white; border-radius: 8px; outline: none; font-size: 1rem;
         }
 
-        input[type="text"]:focus {
-            box-shadow: 0 0 10px var(--primary-border);
-        }
-
-        /* Grid de Diamantes */
-        .diamonds-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 15px;
-        }
+        .diamonds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
 
         .diamond-card {
-            background-color: #111;
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            background-color: #111; border: 1px solid #333;
+            border-radius: 10px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s;
         }
 
-        .diamond-card:hover {
-            border-color: var(--primary-border);
-            transform: translateY(-3px);
-        }
+        .diamond-card.selected { background-color: var(--primary-border); border-color: white; box-shadow: var(--accent-glow); }
 
-        .diamond-card.selected {
-            background-color: var(--primary-border);
-            border-color: var(--text-color);
-            box-shadow: var(--accent-glow);
-        }
-
-        .d-amount {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .d-price {
-            color: #00ff88;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        /* Datos de Pago */
+        /* Alineación a la izquierda */
         .payment-details {
-            background-color: #111;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
+            background-color: #111; padding: 20px; border-radius: 8px;
+            text-align: left; line-height: 1.8;
         }
 
-        .payment-details span {
-            color: #00ff88;
-            font-weight: bold;
+        .payment-details span { color: var(--success); font-weight: bold; }
+
+        .btn-copy {
+            background: none; border: 1px solid var(--success); color: var(--success);
+            padding: 10px; margin-top: 15px; border-radius: 5px;
+            cursor: pointer; font-size: 0.85rem; width: 100%; font-weight: bold;
         }
 
-        /* Temporizador */
-        .timer-container {
-            text-align: center;
-            margin-top: 15px;
-            padding: 10px;
-            background-color: rgba(0, 0, 128, 0.2);
-            border-radius: 8px;
-            border: 1px dashed var(--primary-border);
+        /* Estilos Soporte */
+        .support-header { color: var(--support-red); justify-content: center; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        
+        .support-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 0.9rem; }
+        
+        .support-icon {
+            width: 18px; height: 18px;
+            filter: invert(34%) sepia(93%) saturate(5411%) hue-rotate(346deg) brightness(101%) contrast(101%);
         }
 
-        .timer {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ff3333;
-            font-family: monospace;
-            letter-spacing: 2px;
-        }
+        .timer-container { text-align: center; margin-top: 10px; color: #ff3333; font-weight: bold; }
 
-        /* Botón de Envío */
         .btn-submit {
-            width: 100%;
-            padding: 18px;
-            background-color: var(--primary-border);
-            color: var(--text-color);
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            box-shadow: var(--accent-glow);
-        }
-
-        .btn-submit:hover {
-            background-color: #0000a0;
-            transform: scale(1.02);
-        }
-
-        /* Responsive */
-        @media (max-width: 400px) {
-            .diamonds-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            width: 100%; padding: 18px;
+            background-color: var(--primary-border); color: white;
+            border: none; border-radius: 10px; font-weight: bold;
+            cursor: pointer; text-transform: uppercase; margin-top: 5px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Irecarga</h1>
-        <p>Recargas rápidas y seguras en Venezuela 🇻🇪</p>
+        <h1>Irecarga.Ve</h1>
+        <p>Recargas Directas Free Fire 🇻🇪</p>
     </header>
 
     <div class="container">
         
         <section class="step-section">
-            <div class="step-title">
-                <div class="step-number">1</div>
-                Ingresa tu ID de Jugador
-            </div>
-            <input type="text" id="playerId" placeholder="Ej. 1234567890">
+            <div class="step-title"><div class="step-number">1</div> ID de Jugador</div>
+            <input type="text" id="playerId" placeholder="Ingresa tu ID aquí">
         </section>
 
         <section class="step-section">
-            <div class="step-title">
-                <div class="step-number">2</div>
-                Selecciona tu Recarga
-            </div>
+            <div class="step-title"><div class="step-number">2</div> Elige tus Diamantes</div>
             <div class="diamonds-grid">
-                <div class="diamond-card" onclick="selectPackage(this, '110', '600')">
-                    <div class="d-amount">110 💎</div>
-                    <div class="d-price">600 Bs</div>
-                </div>
-                <div class="diamond-card" onclick="selectPackage(this, '341', '1815')">
-                    <div class="d-amount">341 💎</div>
-                    <div class="d-price">1815 Bs</div>
-                </div>
-                <div class="diamond-card" onclick="selectPackage(this, '572', '3060')">
-                    <div class="d-amount">572 💎</div>
-                    <div class="d-price">3060 Bs</div>
-                </div>
-                <div class="diamond-card" onclick="selectPackage(this, '1155', '6000')">
-                    <div class="d-amount">1155 💎</div>
-                    <div class="d-price">6000 Bs</div>
-                </div>
-                <div class="diamond-card" onclick="selectPackage(this, '2376', '12.000')">
-                    <div class="d-amount">2376 💎</div>
-                    <div class="d-price">12.000 Bs</div>
-                </div>
+                <div class="diamond-card" onclick="selectPackage(this, '110', '600')">110 💎<br>600 Bs</div>
+                <div class="diamond-card" onclick="selectPackage(this, '220', '1205')">220 💎<br>1205 Bs</div>
+                <div class="diamond-card" onclick="selectPackage(this, '341', '1815')">341 💎<br>1815 Bs</div>
+                <div class="diamond-card" onclick="selectPackage(this, '572', '3060')">572 💎<br>3060 Bs</div>
+                <div class="diamond-card" onclick="selectPackage(this, '1155', '6000')">1155 💎<br>6000 Bs</div>
+                <div class="diamond-card" onclick="selectPackage(this, '2376', '12.000')">2376 💎<br>12.000 Bs</div>
+                <div class="diamond-card" onclick="selectPackage(this, 'P. Booyah', '2100')">P. Booyah 🔥<br>2100 Bs</div>
             </div>
         </section>
 
         <section class="step-section">
-            <div class="step-title">
-                <div class="step-number">3</div>
-                Realiza el Pago Móvil
-            </div>
-            <p style="margin-bottom: 15px; font-size: 0.9rem; color: #ccc;">Transfiere el monto exacto a los siguientes datos:</p>
+            <div class="step-title"><div class="step-number">3</div> Pago Móvil (Banesco)</div>
             <div class="payment-details">
-                <p>Banco: <span>Banesco (0134)</span></p>
-                <p>Teléfono: <span>0424-8018068</span></p>
-                <p>Cédula: <span>V-30870489</span></p>
+                <strong>Banco:</strong> <span>Banesco (0134)</span><br>
+                <strong>Teléfono:</strong> <span>04248018068</span><br>
+                <strong>Cédula:</strong> <span>V-30870489</span>
+                
+                <button type="button" class="btn-copy" onclick="copiarDatos(this)">
+                    📋 COPIAR DATOS DE PAGO
+                </button>
             </div>
-            
             <div class="timer-container">
-                <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 5px;">Tiempo restante para reportar tu pago:</p>
-                <div class="timer" id="countdown">30:00</div>
+                Reportar pago en: <span id="countdown">30:00</span>
             </div>
         </section>
 
-        <button class="btn-submit" onclick="sendWhatsApp()">Confirmar y Enviar Comprobante</button>
+        <section class="step-section">
+            <div class="step-title support-header">CONTACTO Y SOPORTE</div>
+                    <div style="display: flex; flex-direction: column; gap: 15px; padding: 15px 0; text-align: left;">
+            
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <img class="support-icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/></svg>">
+                <a href="mailto:irecarga.ve@gmail.com?subject=Soporte%20Irecarga" style="color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
+                    soporte@irecarga.ve
+                </a>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <img class="support-icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'/></svg>">
+                <span style="font-size: 0.9rem;">Lunes a Domingo: 8:00 AM - 10:00 PM</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <img class="support-icon" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/></svg>">
+                <span style="font-size: 0.9rem;">Porlamar, Nueva Esparta, Venezuela</span>
+            </div>
+
+        </div>
+
+        <button class="btn-submit" onclick="sendWhatsApp()">Confirmar en WhatsApp</button>
 
     </div>
 
@@ -290,65 +180,43 @@
         let selectedDiamonds = '';
         let selectedPrice = '';
 
-        // Función para seleccionar el paquete
         function selectPackage(element, diamonds, price) {
-            // Quitar clase 'selected' de todos
             let cards = document.getElementsByClassName('diamond-card');
-            for (let card of cards) {
-                card.classList.remove('selected');
-            }
-            // Añadir clase 'selected' al clickeado
+            for (let card of cards) card.classList.remove('selected');
             element.classList.add('selected');
-            
-            // Guardar valores
             selectedDiamonds = diamonds;
             selectedPrice = price;
         }
 
-        // Lógica del Temporizador de 30 minutos
+        function copiarDatos(btn) {
+            const datos = "Banesco / 04248018068 / V-30870489";
+            navigator.clipboard.writeText(datos).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = "✅ DATOS COPIADOS";
+                setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+            });
+        }
+
         function startTimer(duration, display) {
             let timer = duration, minutes, seconds;
-            setInterval(function () {
+            setInterval(() => {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    timer = 0; // Se detiene en 00:00
-                }
+                display.textContent = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+                if (--timer < 0) timer = 0;
             }, 1000);
         }
 
-        // Iniciar el temporizador al cargar la página
-        window.onload = function () {
-            let thirtyMinutes = 60 * 30;
-            let display = document.querySelector('#countdown');
-            startTimer(thirtyMinutes, display);
-        };
+        window.onload = () => { startTimer(60 * 30, document.querySelector('#countdown')); };
 
-        // Función para enviar por WhatsApp (Opcional para que sea funcional)
         function sendWhatsApp() {
             let playerId = document.getElementById('playerId').value;
-            
-            if(!playerId) {
-                alert("Por favor, ingresa tu ID de jugador.");
+            if(!playerId || !selectedDiamonds) {
+                alert("Ingresa tu ID y selecciona los diamantes.");
                 return;
             }
-            if(!selectedDiamonds) {
-                alert("Por favor, selecciona una cantidad de diamantes.");
-                return;
-            }
-
-            // Aquí puedes colocar tu número real de WhatsApp con el código de país (ej. 58424...)
-            let phoneNumber = "584248018068"; 
-            let message = `¡Hola Irecarga! Acabo de realizar un pago.%0A%0A*Detalles de mi pedido:*%0A🎮 ID: ${playerId}%0A💎 Diamantes: ${selectedDiamonds}%0A💰 Monto pagado: ${selectedPrice} Bs%0A%0AAdjunto el comprobante de pago móvil.`;
-            
-            let whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-            window.open(whatsappUrl, '_blank');
+            let msg = `*Irecarga*%0A🎮 ID: ${playerId}%0A💎 Pack: ${selectedDiamonds}%0A💰 Monto: ${selectedPrice} Bs`;
+            window.open(`https://wa.me/584248018068?text=${msg}`, '_blank');
         }
     </script>
 </body>
