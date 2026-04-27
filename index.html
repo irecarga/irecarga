@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRECARGA - Pro Gamer Service</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        :root {
+            /* Paleta de colores limpios: Azul, blanco y oscuro */
+            --bg-page: #0a0f1c; /* Fondo general oscuro */
+            --bg-card: #111827; /* Fondo de las tarjetas */
+            --color-azul: #2563eb; /* Azul principal para botones y marcos */
+            --color-azul-claro: #3b82f6; /* Azul más claro para resaltar */
+            --text-blanco: #ffffff; /* Letras blancas */
+            --text-gris: #9ca3af; /* Gris para textos secundarios */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+        body { background: var(--bg-page); color: var(--text-blanco); padding: 20px; display: flex; flex-direction: column; min-height: 100vh; }
+        .container { max-width: 500px; margin: auto; flex: 1; width: 100%; }
+
+        header { text-align: center; padding: 20px 0; }
+        #logo { max-width: 100px; margin-bottom: 10px; }
+        header h1 { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+        header h1 span { color: var(--color-azul-claro); }
+
+        .section-header { margin: 25px 0 10px; font-size: 14px; font-weight: 600; color: var(--text-gris); }
+
+        /* Inputs con marco azul */
+        .input-box { width: 100%; background: var(--bg-card); border: 2px solid #1e293b; padding: 16px; color: var(--text-blanco); border-radius: 12px; font-size: 15px; outline: none; transition: 0.2s; margin-bottom: 15px; }
+        .input-box:focus { border-color: var(--color-azul); }
+
+        /* Cuadrícula de Diamantes con marcos azules */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .card { background: var(--bg-card); border: 2px solid #1e293b; padding: 18px; text-align: center; cursor: pointer; border-radius: 12px; transition: 0.3s; }
+        .card:hover { border-color: var(--color-azul-claro); }
+        .card.selected { border-color: var(--color-azul); background: rgba(37, 99, 235, 0.15); }
+        .card strong { display: block; font-size: 18px; margin-bottom: 5px; color: var(--text-blanco); }
+        .card span { color: var(--text-gris); font-size: 14px; }
+
+        /* Sección de pago con marco azul limpio (SIN NEÓN) */
+        #pago-section {
+            background: var(--bg-card);
+            border: 2px solid var(--color-azul);
+            border-radius: 14px;
+            padding: 20px;
+            margin-top: 10px;
+        }
+
+        /* Cuenta Regresiva */
+        .timer-box { display: flex; justify-content: space-between; align-items: center; background: rgba(74, 222, 128, 0.1); padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #22c55e; }
+        .timer-label { font-size: 13px; color: var(--text-blanco); }
+        #timer { color: #4ade80; font-size: 18px; font-weight: 700; }
+
+        /* Datos de Pago Banesco */
+        .payment-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #1e293b; }
+        .payment-row:last-child { border-bottom: none; }
+        .data-label { font-size: 14px; color: var(--text-blanco); display: flex; align-items: center; gap: 8px; }
+        
+        /* Botones de copiar */
+        .copy-btn { background: #1e293b; color: var(--text-blanco); border: 1px solid var(--color-azul); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: 0.2s; }
+        .copy-btn:hover { background: var(--color-azul); }
+        .copy-all { background: #1e293b; color: var(--text-blanco); width: 100%; border: 1px solid var(--color-azul); padding: 14px; border-radius: 8px; margin-top: 15px; cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.2s; }
+        .copy-all:hover { background: var(--color-azul); }
+
+        /* Botón Principal de WhatsApp */
+        .btn-wha { background: var(--color-azul); color: var(--text-blanco); width: 100%; padding: 16px; border: none; font-weight: 600; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 20px; transition: 0.2s; }
+        .btn-wha:hover { background: #1d4ed8; }
+
+        footer { text-align: center; padding: 40px 0 20px; margin-top: 20px; }
+        .footer-copy { font-size: 14px; color: var(--text-gris); margin-bottom: 8px; }
+        .footer-links { font-size: 14px; color: var(--text-gris); display: flex; justify-content: center; gap: 20px; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <img src="logo.png" alt="IRECARGA" id="logo">
+        <h1>IRE<span>CARGA</span></h1>
+    </header>
+
+    <div class="section-header">Identificación</div>
+    <input type="number" id="playerID" class="input-box" placeholder="Ingresa tu ID de Garena">
+
+    <div class="section-header">Selecciona tu Paquete</div>
+    <div class="grid" id="diamondGrid"></div>
+
+    <div id="pago-section" class="hidden">
+        <div class="timer-box">
+            <span class="timer-label">Tiempo para pagar:</span>
+            <span id="timer">30:00</span>
+        </div>
+
+        <div class="section-header" style="margin-top: 0;">Datos de Pago Móvil</div>
+        <div class="payment-row">
+            <span class="data-label">🏦 BANESCO (0134)</span>
+            <button class="copy-btn" onclick="copy('0134')">Copiar</button>
+        </div>
+        <div class="payment-row">
+            <span class="data-label">👤 30870489</span>
+            <button class="copy-btn" onclick="copy('30870489')">Copiar</button>
+        </div>
+        <div class="payment-row">
+            <span class="data-label">📞 04248018068</span>
+            <button class="copy-btn" onclick="copy('04248018068')">Copiar</button>
+        </div>
+        <button class="copy-all" onclick="copy('Banco: Banesco (0134), CI: 30870489, Tel: 04248018068')">Copiar todos los datos</button>
+
+        <div class="section-header" style="margin-top: 25px;">Referencia</div>
+        <input type="number" id="referencia" class="input-box" placeholder="Últimos 6 dígitos del pago" style="margin-bottom: 0;">
+
+        <button type="button" class="btn-wha" onclick="enviar()">
+            Finalizar Pedido en WhatsApp
+        </button>
+    </div>
+
+    <footer>
+        <div class="footer-copy">© 2026 IRECARGA – Pro Gamer Service</div>
+        <div class="footer-links">
+            <span>Condiciones de servicio</span>
+            <span>Política de privacidad</span>
+        </div>
+    </footer>
+</div>
+
+<script>
+    const paquetes = [
+        { d: '110', p: '599' }, { d: '220', p: '1.210' },
+        { d: '341', p: '1.896' }, { d: '572', p: '2.993' },
+        { d: '1166', p: '5.513' }, { d: '2398', p: '11.025' }
+    ];
+
+    const grid = document.getElementById('diamondGrid');
+    paquetes.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<strong>${item.d} 💎</strong><span>Bs ${item.p}</span>`;
+        card.onclick = () => {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            document.getElementById('h_diams').value = item.d;
+            document.getElementById('h_monto').value = item.p;
+            document.getElementById('pago-section').classList.remove('hidden');
+            startTimer(1800);
+        };
+        grid.appendChild(card);
+    });
+
+    function copy(text) {
+        navigator.clipboard.writeText(text);
+        alert("¡Copiado! " + text);
+    }
+
+    function startTimer(duration) {
+        let timer = duration, minutes, seconds;
+        const display = document.querySelector('#timer');
+        const interval = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            display.textContent = minutes + ":" + seconds;
+            if (--timer < 0) clearInterval(interval);
+        }, 1000);
+    }
+
+    function enviar() {
+        const id = document.getElementById('playerID').value;
+        const ref = document.getElementById('referencia').value;
+        const d = document.getElementById('h_diams').value;
+        const m = document.getElementById('h_monto').value;
+        if (!id || !ref) return alert("Por favor, ingresa tu ID y el número de referencia.");
+        const msj = `*🛰️ NUEVO PEDIDO IRECARGA*%0A*ID:* \`${id}\` %0A*PAQUETE:* ${d} Diamantes%0A*REF:* ${ref}`;
+        window.open(`https://api.whatsapp.com/send?phone=584248018068&text=${msj}`, '_blank');
+    }
+</script>
+<input type="hidden" id="h_diams"><input type="hidden" id="h_monto">
+</body>
+</html>
