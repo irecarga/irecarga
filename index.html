@@ -166,124 +166,120 @@
     </div>
 
     <footer>
-        <div class="footer-copy">© 2026 IRECARGA – Pro Gamer Service</div>
-        <div class="footer-links">
-            <span>Condiciones de servicio</span>
-            <span>Política de privacidad</span>
-        </div>
-    </footer>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRECARGA - Pro Gamer Service</title>
+    <style>
+        :root {
+            --bg-page: #0a0f1c;
+            --bg-card: #111827;
+            --color-azul: #2563eb;
+            --text-blanco: #ffffff;
+            --text-gris: #9ca3af;
+        }
+
+        body { background: var(--bg-page); color: var(--text-blanco); font-family: sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 450px; margin: auto; text-align: left; }
+
+        /* Icono arriba de Identificación */
+        .icon-ff { width: 50px; height: 50px; background: #ef4444; border-radius: 10px; margin-bottom: 10px; display: block; border: 2px solid white; }
+        
+        h2 { font-size: 16px; color: var(--text-gris); margin-bottom: 10px; text-transform: uppercase; }
+
+        .input-box { width: 100%; background: var(--bg-card); border: 2px solid #1e293b; padding: 15px; color: white; border-radius: 10px; margin-bottom: 20px; outline: none; }
+        .input-box:focus { border-color: var(--color-azul); }
+
+        /* Cuadrícula SIN CANDADOS */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .card { background: var(--bg-card); border: 2px solid #1e293b; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.3s; text-align: center; }
+        .card:hover { border-color: var(--color-azul); }
+        .card.selected { border-color: var(--color-azul); background: rgba(37, 99, 235, 0.1); }
+        .card strong { display: block; font-size: 18px; }
+
+        /* Sección de Pago Separada */
+        #pago-section { background: var(--bg-card); border: 2px solid var(--color-azul); border-radius: 15px; padding: 20px; margin-top: 20px; display: none; }
+        .timer { color: #4ade80; font-weight: bold; font-size: 20px; text-align: center; margin-bottom: 15px; display: block; }
+        
+        .btn-wha { background: var(--color-azul); color: white; width: 100%; padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="free_fire_icon.png" alt="FF" class="icon-ff" onerror="this.style.display='none'"> 
+    
+    <h2>Identificación</h2>
+    <input type="number" id="playerID" class="input-box" placeholder="Ingresa tu ID de Garena">
+
+    <h2>Selecciona tu Paquete</h2>
+    <div class="grid" id="diamondGrid"></div>
+
+    <div id="pago-section">
+        <span class="timer" id="timer">30:00</span>
+        
+        <p style="font-size: 14px; color: var(--text-gris);">Datos Banesco:</p>
+        <p><strong>0134 - 30870489 - 04248018068</strong></p>
+
+        <input type="number" id="referencia" class="input-box" placeholder="Últimos 6 dígitos del pago" style="margin-top: 15px;">
+
+        <button class="btn-wha" onclick="enviar()">Finalizar en WhatsApp</button>
+    </div>
 </div>
 
 <script>
-    // Configuración de Paquetes
     const paquetes = [
-        { d: '110', p: '599', special: false }, { d: '220', p: '1.210', special: false },
-        { d: '341', p: '1.896', special: true }, { d: '572', p: '2.993', special: false },
-        { d: '1166', p: '5.513', special: false }, { d: '2398', p: '11.025', special: false }
+        { d: '110', p: '599' }, { d: '220', p: '1.210' },
+        { d: '341', p: '1.896' }, { d: '572', p: '2.993' },
+        { d: '1166', p: '5.513' }, { d: '2398', p: '11.025' }
     ];
 
     const grid = document.getElementById('diamondGrid');
-    
-    // Función para validar ID sutil - Función Nueva
-    function validarID() {
-        const idInput = document.getElementById('playerID');
-        const verificadorStatus = document.getElementById('verificadorStatus');
-        if (idInput.value.length === 10) { // Un ejemplo de longitud de ID
-            verificadorStatus.innerHTML = '<i class="fa-solid fa-check-circle valid"></i>';
-            updateStep(1); // Mover al paso del paquete
-        } else if (idInput.value.length > 0) {
-            verificadorStatus.innerHTML = '<i class="fa-solid fa-circle valid" style="color: var(--text-gris); font-size: 8px;"></i>';
-            updateStep(0); // Volver al paso de ID
-        } else {
-            verificadorStatus.innerHTML = '';
-            updateStep(0);
-        }
-    }
+    let cronometroIniciado = false;
 
-    // Función para actualizar los pasos de compra - Función Nueva
-    function updateStep(index) {
-        const steps = document.querySelectorAll('.step');
-        steps.forEach((step, i) => {
-            if (i === index) {
-                step.classList.add('active');
-            } else {
-                step.classList.remove('active');
-            }
-        });
-    }
-
-    // Generar paquetes dinámicamente
-    paquetes.forEach((item, index) => {
+    paquetes.forEach(item => {
         const card = document.createElement('div');
-        card.className = `card ${item.special ? 'special' : ''}`;
-        
-        // Etiqueta de oferta sutil - Función Nueva
-        const offerTag = item.special ? '<div class="offer-tag">Oferta Especial</div>' : '<div class="offer-tag">Mejor Valor</div>';
-        
-        // Barra de progreso de diamantes sutil - Función Nueva
-        const maxDiams = paquetes[paquetes.length - 1].d;
-        const progressWidth = (parseInt(item.d) / parseInt(maxDiams)) * 100;
-        const progressFill = `<div class="diamond-progress"><div class="progress-fill" style="width: ${progressWidth}%"></div></div>`;
-
-        card.innerHTML = `${offerTag}<strong>${item.d}</strong>${progressFill}<span>Bs ${item.p} <i class="fa-solid fa-diamond" style="color: var(--color-azul-claro); font-size: 10px;"></i></span>`;
-        
-        // El paquete 110 está preseleccionado en tu referencia
-        if (index === 0) {
-            card.classList.add('selected');
-            document.getElementById('h_diams').value = item.d;
-            document.getElementById('h_monto').value = item.p;
-        }
-
+        card.className = 'card';
+        card.innerHTML = `<strong>${item.d} 💎</strong><span>Bs ${item.p}</span>`;
         card.onclick = () => {
             document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
             card.classList.add('selected');
+            
+            // Guardar datos
             document.getElementById('h_diams').value = item.d;
             document.getElementById('h_monto').value = item.p;
-            document.getElementById('pago-section').classList.remove('hidden');
-            startTimer(1800); // 30 Minutos exactos
-            updateStep(2); // Mover al paso de pago
+
+            // Mostrar pago y arrancar tiempo SOLO SI NO HA EMPEZADO
+            document.getElementById('pago-section').style.display = 'block';
+            if (!cronometroIniciado) {
+                startTimer(1800);
+                cronometroIniciado = true;
+            }
         };
         grid.appendChild(card);
     });
 
-    // Función de Copiado
-    function copy(text) {
-        navigator.clipboard.writeText(text);
-        alert("¡Copiado! " + text);
-    }
-
-    // Función de Copiado Completo
-    function copyAll() {
-        const textToCopy = 'Banco: Banesco (0134), CI: 30.870.489, Teléfono: 0424-8018068';
-        navigator.clipboard.writeText(textToCopy);
-        alert("¡Todos los datos copiados al portapapeles!");
-    }
-
-    // Cuenta Regresiva optimizada
-    let timerInterval;
     function startTimer(duration) {
-        if (timerInterval) clearInterval(timerInterval); // Limpiar temporizador anterior si existe
         let timer = duration, minutes, seconds;
         const display = document.querySelector('#timer');
-        timerInterval = setInterval(function () {
+        setInterval(() => {
             minutes = parseInt(timer / 60, 10);
             seconds = parseInt(timer % 60, 10);
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            display.textContent = minutes + ":" + seconds;
-            if (--timer < 0) clearInterval(timerInterval);
+            display.textContent = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+            if (--timer < 0) timer = 0;
         }, 1000);
     }
 
-    // Envío de WhatsApp
     function enviar() {
         const id = document.getElementById('playerID').value;
+        const ref = document.getElementById('referencia').value;
         const d = document.getElementById('h_diams').value;
-        const m = document.getElementById('h_monto').value;
-        if (!id) return alert("Por favor, ingresa tu ID de Garena.");
-        if (!d) return alert("Por favor, selecciona un paquete.");
-        const msj = `*🛰️ NUEVO PEDIDO IRECARGA*%0A*ID:* \`${id}\` %0A*PAQUETE:* ${d} Diamantes 💎%0A*MONTO:* Bs ${m}%0A_Hola Isaías, envío el pago para mi recarga._`;
-        window.open(`https://api.whatsapp.com/send?phone=584248018068&text=${msj}`, '_blank');
+        if (!id || !ref) return alert("Llena todos los campos");
+        window.open(`https://api.whatsapp.com/send?phone=584248018068&text=ID:${id}%20Pack:${d}%20Ref:${ref}`);
     }
 </script>
 <input type="hidden" id="h_diams"><input type="hidden" id="h_monto">
