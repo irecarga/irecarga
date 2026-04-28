@@ -217,6 +217,9 @@
         const ref = document.getElementById('referencia').value;
         const file = document.getElementById('comprobante').files[0];
         const loader = document.getElementById('loader');
+        
+        // CAPTURAMOS EL PRECIO DE LA PANTALLA
+        const precioActual = document.getElementById('payment-price').innerText;
 
         if(!id || !ref || !file) {
             alert("⚠️ Error: Complete todos los campos.");
@@ -241,6 +244,7 @@
                 .insert([{
                     player_id: id,
                     paquete: selectedPackValue,
+                    monto_bs: precioActual, // <--- AQUÍ SE GUARDA EL MONTO AHORA
                     referencia: ref,
                     capture_url: urlData.publicUrl,
                     status: 'pendiente'
@@ -248,19 +252,19 @@
 
             if (dbError) throw dbError;
 
-            // --- ESTO ES LO NUEVO: ENVÍO DE CORREO ---
+            // ENVÍO DE CORREO (Incluyendo el monto)
             const emailParams = {
                 player_id: id,
                 paquete: selectedPackValue,
+                monto: precioActual,
                 referencia: ref,
                 capture_url: urlData.publicUrl
             };
 
             emailjs.send('servicio_irecarga', 'template_0pqg9v7', emailParams)
                 .then(() => {
-                    console.log("Aviso enviado al correo de Isaías");
+                    console.log("Aviso enviado al correo");
                 });
-            // ------------------------------------------
 
             loader.style.borderColor = "var(--accent-green)";
             loader.innerText = "✅ PAGO RECIBIDO. VALIDANDO REFERENCIA...";
