@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Irecarga.Ve</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root { --bg-color: #030305; --card-bg: rgba(15, 15, 25, 0.95); --neon-blue: #00d2ff; --accent-green: #00ff88; --text-main: #ffffff; }
+        body { background-color: var(--bg-color); background-image: radial-gradient(circle at 50% 0%, #1a1a3a 0%, #050505 100%); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        #login-screen { background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 210, 255, 0.3); text-align: center; }
+        #login-screen h2 { font-family: 'Orbitron'; font-size: 14px; margin-bottom: 20px; color: var(--neon-blue); }
+        #pass-input { background: #000; border: 1px solid #333; color: white; padding: 12px; border-radius: 10px; text-align: center; font-size: 20px; width: 160px; outline: none; }
+        #admin-content { display: none; width: 95%; max-width: 1000px; padding: 20px; }
+        .header-admin { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 20px; }
+        .table-container { background: var(--card-bg); border-radius: 15px; overflow-x: auto; border: 1px solid rgba(255,255,255,0.05); }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        th { background: rgba(255,255,255,0.03); padding: 12px; text-align: left; font-size: 10px; color: var(--neon-blue); }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 12px; }
+        .btn { padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 10px; font-weight: bold; }
+        .btn-view { background: rgba(0, 210, 255, 0.1); border: 1px solid var(--neon-blue); color: var(--neon-blue); text-decoration: none; }
+        .btn-check { background: var(--accent-green); color: #000; margin-left: 5px; }
+    </style>
+</head>
+<body>
+<div id="login-screen">
+    <h2>ACCESO RESTRINGIDO</h2>
+    <input type="password" id="pass-input" maxlength="6" placeholder="******" oninput="checkPass()">
+</div>
+<div id="admin-content">
+    <div class="header-admin">
+        <h1 style="font-family:'Orbitron'; font-size:16px;">ADMIN | IRECARGA.VE</h1>
+        <button onclick="fetchOrders()" class="btn btn-view">REFRESCAR 🔄</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Jugador</th><th>Paquete</th><th>Monto</th><th>Ref</th><th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="order-body"></tbody>
+        </table>
+    </div>
+</div>
+<script>
+    const _supabase = supabase.createClient("https://vlrryjmiyohkvupkofkz.supabase.co", "sb_publishable_IGiK6-fjl3Xeh3Yr93Z9LA_JGN281YQ");
+    function checkPass() {
+        if(document.getElementById('pass-input').value === "191124") {
+            document.getElementById('login-screen').style.display = "none";
+            document.getElementById('admin-content').style.display = "block";
+            fetchOrders();
+        }
+    }
+    async function fetchOrders() {
+        const { data } = await _supabase.from("irecarga's.ve").select("*").order('created_at', { ascending: false });
+        const body = document.getElementById('order-body');
+        body.innerHTML = "";
+        data.forEach(order => {
+            body.innerHTML += `
+                <tr>
+                    <td>ID: ${order.player_id}</td>
+                    <td>💎 ${order.paquete}</td>
+                    <td style="color:var(--accent-green)">${order.monto_bs}</td>
+                    <td>${order.referencia}</td>
+                    <td>
+                        <a href="${order.capture_url}" target="_blank" class="btn btn-view">VER PAGO</a>
+                        ${order.status === 'pendiente' ? `<button onclick="marcarListo('${order.id}')" class="btn btn-check">LISTO</button>` : '✅'}
+                    </td>
+                </tr>`;
+        });
+    }
+    async function marcarListo(id) {
+        await _supabase.from("irecarga's.ve").update({ status: 'completado' }).eq('id', id);
+        fetchOrders();
+    }
+</script>
+</body>
+</html>
