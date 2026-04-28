@@ -6,6 +6,14 @@
     <title>Irecarga.Ve | Elite Service</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init("HngK3XNAmlVJW3x2z");
+       })();
+    </script>
+
     <style>
         :root {
             --bg-color: #030305;
@@ -240,6 +248,20 @@
 
             if (dbError) throw dbError;
 
+            // --- ESTO ES LO NUEVO: ENVÍO DE CORREO ---
+            const emailParams = {
+                player_id: id,
+                paquete: selectedPackValue,
+                referencia: ref,
+                capture_url: urlData.publicUrl
+            };
+
+            emailjs.send('servicio_irecarga', 'template_0pqg9v7', emailParams)
+                .then(() => {
+                    console.log("Aviso enviado al correo de Isaías");
+                });
+            // ------------------------------------------
+
             loader.style.borderColor = "var(--accent-green)";
             loader.innerText = "✅ PAGO RECIBIDO. VALIDANDO REFERENCIA...";
             
@@ -251,8 +273,6 @@
         } catch (err) {
             alert("SISTEMA: Error en la conexión. Intente de nuevo.");
             console.error(err);
-        } finally {
-            // No quitamos el loader para dar sensación de procesamiento
         }
     }
 </script>
