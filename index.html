@@ -3,55 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Irecarga.Ve | Pro</title>
+    <title>Irecarga.ve | Recargas Free Fire</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --bg: #030305; --blue: #00d2ff; --green: #00ff88; }
-        body { background: var(--bg); color: white; font-family: 'Rajdhani', sans-serif; padding: 20px; display: flex; justify-content: center; }
-        .card { max-width: 400px; width: 100%; background: rgba(20,20,30,0.9); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        h1 { font-family: 'Orbitron'; text-align: center; color: var(--blue); font-size: 22px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #000; color: white; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; border-radius: 10px; border: none; background: var(--blue); color: #000; font-weight: bold; cursor: pointer; font-family: 'Orbitron'; }
-        #loader { display: none; color: var(--green); text-align: center; margin-top: 10px; }
+        :root { --bg: #030305; --blue: #00d2ff; --purple: #9d50bb; --white: #ffffff; }
+        body { background: var(--bg); color: var(--white); font-family: 'Rajdhani', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .container { max-width: 450px; width: 100%; }
+        header { text-align: center; margin-bottom: 25px; }
+        h1 { font-family: 'Orbitron'; color: var(--blue); margin: 0; font-size: 24px; text-shadow: 0 0 10px rgba(0,210,255,0.5); }
+        
+        .section { background: rgba(20,20,30,0.9); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; }
+        h2 { font-size: 16px; text-transform: uppercase; color: var(--blue); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 8px; }
+        
+        .pago-info { background: #000; padding: 12px; border-radius: 10px; border: 1px dashed var(--blue); font-size: 14px; line-height: 1.6; }
+        
+        select, input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #080808; color: white; box-sizing: border-box; font-family: 'Rajdhani'; font-size: 16px; }
+        
+        .btn { width: 100%; padding: 16px; border-radius: 10px; border: none; background: linear-gradient(90deg, var(--blue), var(--purple)); color: white; font-weight: bold; cursor: pointer; font-family: 'Orbitron'; font-size: 14px; transition: 0.3s; }
+        .btn:hover { opacity: 0.9; transform: scale(1.02); }
+        
+        #loader { display: none; text-align: center; color: var(--blue); font-weight: bold; margin-top: 10px; animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h1>IRECARGA.VE</h1>
-    
-    <label>ID JUGADOR</label>
-    <input type="text" id="p_id" placeholder="ID de Free Fire">
+<div class="container">
+    <header>
+        <h1>IRECARGA.VE</h1>
+        <p style="font-size: 12px; color: #888;">RECARGAS AUTOMÁTICAS VENEZUELA</p>
+    </header>
 
-    <label>REFERENCIA (6 DÍGITOS)</label>
-    <input type="text" id="ref" placeholder="Ej: 123456">
+    <div class="section">
+        <h2>1. Datos de Pago Móvil</h2>
+        <div class="pago-info">
+            <strong>Banco:</strong> Banesco (0134)<br>
+            <strong>Teléfono:</strong> 04248018068<br>
+            <strong>Cédula:</strong> V-30.870.489
+        </div>
+    </div>
 
-    <label>SUBIR CAPTURE DE PAGO</label>
-    <input type="file" id="foto" accept="image/*">
+    <div class="section">
+        <h2>2. Detalles del Pedido</h2>
+        <label>ID de Jugador:</label>
+        <input type="text" id="player_id" placeholder="Ingresa ID de Free Fire">
+        
+        <label>Paquete de Diamantes:</label>
+        <select id="paquete">
+            <option value="110">110 Diamantes - 190 Bs</option>
+            <option value="330">330 Diamantes - 550 Bs</option>
+            <option value="572">572 Diamantes - 940 Bs</option>
+            <option value="1144">1144 Diamantes - 1850 Bs</option>
+        </select>
+    </div>
 
-    <button class="btn" onclick="enviarPedido()">CONFIRMAR PAGO</button>
-    <div id="loader">PROCESANDO... POR FAVOR ESPERA.</div>
+    <div class="section">
+        <h2>3. Confirmación de Pago</h2>
+        <label>Referencia (6 últimos dígitos):</label>
+        <input type="text" id="ref" placeholder="Ej: 456789">
+        
+        <label>Subir Capture de Pago móvil:</label>
+        <input type="file" id="foto" accept="image/*">
+    </div>
+
+    <button class="btn" onclick="enviarPedido()">CONFIRMAR RECARGA</button>
+    <div id="loader">PROCESANDO SOLICITUD... NO CIERRES LA PÁGINA</div>
 </div>
 
 <script>
-    // Usando tus credenciales de las capturas
+    // Configuración con tus llaves reales
     const SUPABASE_URL = "https://vlrryjmiyohkvupkofkz.supabase.co";
     const SUPABASE_KEY = "sb_publishable_IGiK6-fjl3Xeh3Yr93Z9LA_JGN281YQ";
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     async function enviarPedido() {
-        const id = document.getElementById('p_id').value;
+        const id = document.getElementById('player_id').value;
+        const pack = document.getElementById('paquete').value;
         const ref = document.getElementById('ref').value;
         const file = document.getElementById('foto').files[0];
         const loader = document.getElementById('loader');
 
-        if(!id || !ref || !file) return alert("Por favor, llena todos los campos y sube la foto.");
+        if(!id || !ref || !file) {
+            alert("⚠️ Por favor rellena todos los campos y sube el comprobante.");
+            return;
+        }
 
         loader.style.display = "block";
 
         try {
-            // 1. Subir la foto al bucket Comprobantes
+            // 1. Subir la imagen al Bucket "Comprobantes"
             const path = `pagos/${Date.now()}_${id}.png`;
             const { data: upData, error: upError } = await _supabase.storage
                 .from('Comprobantes')
@@ -59,14 +100,15 @@
 
             if (upError) throw upError;
 
-            // 2. Obtener el link público de la foto
+            // 2. Obtener URL pública
             const { data: urlData } = _supabase.storage.from('Comprobantes').getPublicUrl(path);
 
-            // 3. Guardar los datos en la tabla irecarga's.ve
+            // 3. Guardar en la tabla con todos los datos
             const { error: dbError } = await _supabase
                 .from("irecarga's.ve")
                 .insert([{
                     player_id: id,
+                    paquete: pack,
                     referencia: ref,
                     capture_url: urlData.publicUrl,
                     status: 'pendiente'
@@ -74,16 +116,17 @@
 
             if (dbError) throw dbError;
 
-            alert("✅ ¡Pago enviado con éxito! Verificaremos tu referencia pronto.");
+            alert("✅ ¡PEDIDO REGISTRADO! Verificaremos tu pago y recibirás los diamantes.");
             location.reload();
 
         } catch (err) {
-            alert("Error al procesar: " + err.message);
+            alert("❌ Error: " + err.message);
             console.error(err);
         } finally {
             loader.style.display = "none";
         }
     }
 </script>
+
 </body>
 </html>
