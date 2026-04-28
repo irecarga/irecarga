@@ -42,13 +42,31 @@
             letter-spacing: 1px; font-weight: 600;
         }
 
-        /* --- SISTEMA ACTIVO (DINÁMICO) --- */
+        /* --- NUEVO ESTADO ONLINE (PUNTO PARPADEANTE) --- */
         .status-bar {
-            background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.2);
-            padding: 10px 15px; border-radius: 12px; margin-bottom: 15px;
-            font-size: 12px; font-family: 'Rajdhani', sans-serif;
-            text-align: center;
+            background: rgba(0, 255, 136, 0.05); 
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 12px 15px; border-radius: 12px; margin-bottom: 15px;
+            font-size: 13px; font-family: 'Rajdhani', sans-serif;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
         }
+
+        .dot-online {
+            width: 10px; height: 10px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+            animation: pulse-green 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-green {
+            0% { opacity: 1; box-shadow: 0 0 8px var(--accent-green); }
+            50% { opacity: 0.4; box-shadow: 0 0 2px var(--accent-green); }
+            100% { opacity: 1; box-shadow: 0 0 8px var(--accent-green); }
+        }
+
+        .status-text b { color: var(--accent-green); }
 
         /* --- SECCIONES --- */
         .section {
@@ -72,12 +90,12 @@
             padding: 12px; border-radius: 10px; color: white; outline: none;
         }
 
-        /* --- GRID DIAMANTES (CORREGIDO A 3x3) --- */
+        /* --- GRID DIAMANTES --- */
         .diamond-grid { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
             gap: 8px; 
-            margin-bottom: 10px; /* Espacio inferior libre para nuevos montos */
+            margin-bottom: 10px;
         }
         .diamond-card {
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.08);
@@ -91,45 +109,37 @@
             background: linear-gradient(135deg, rgba(0, 210, 255, 0.15), rgba(157, 80, 187, 0.15));
         }
 
-        /* --- PAGO MÓVIL (CORREGIDO) --- */
+        /* --- PAGO MÓVIL --- */
         .payment-box {
             background: #000; border-radius: 15px; padding: 18px;
             border: 1px dashed rgba(0, 210, 255, 0.3);
-            display: flex; justify-content: space-between; align-items: center;
+            text-align: center;
         }
-        .payment-info { flex: 1.1; }
-        .total-val { color: var(--accent-green); font-size: 22px; font-weight: bold; }
+        .total-label { font-size: 10px; color: #555; display: block; margin-bottom: 5px; }
+        .total-val { color: var(--accent-green); font-size: 28px; font-weight: bold; display: block; margin-bottom: 15px; }
         
-        .bank-data-row {
-            display: flex; align-items: center; justify-content: flex-start;
-            margin-top: 5px; font-size: 13px;
+        .bank-info-container {
+            background: rgba(255,255,255,0.03); border-radius: 10px;
+            padding: 10px; width: 100%; box-sizing: border-box;
         }
-        .bank-data-row b { margin-right: 5px; } /* Texto a la izquierda */
+
+        .bank-data-row {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 8px; font-size: 14px; padding: 5px 10px;
+        }
+        .bank-data-row:last-child { margin-bottom: 0; }
+        .bank-data-row b { color: var(--neon-blue); }
         
         .mini-btn-copy {
             background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.2);
-            color: var(--neon-blue); font-size: 9px; padding: 1px 5px;
-            border-radius: 3px; cursor: pointer; font-family: 'Orbitron';
-            margin-left: 5px; /* Pegado al texto */
+            color: var(--neon-blue); font-size: 9px; padding: 4px 8px;
+            border-radius: 5px; cursor: pointer; font-family: 'Orbitron';
         }
-
-        /* --- SELECTOR BANCOS RESTAURADO --- */
-        .bank-selector-advanced { flex: 0.9; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .grid-bancos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
-        .tag-banco {
-            background: #111; border: 1px solid #333; border-radius: 6px;
-            width: 70px; height: 50px; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; cursor: pointer; text-align: center;
-        }
-        .tag-banco img { width: 18px; margin-bottom: 2px; }
-        .tag-banco span { font-size: 8px; color: #666; font-weight: bold; text-transform: uppercase; }
-        .tag-banco.active { border-color: var(--accent-green); background: rgba(0, 255, 136, 0.05); }
-        .tag-banco.active span { color: var(--accent-green); }
 
         .btn-main {
-            width: 100%; padding: 12px; border-radius: 10px; border: none;
+            width: 100%; padding: 14px; border-radius: 10px; border: none;
             background: var(--neon-blue); color: #000; font-weight: 700;
-            cursor: pointer; margin-top: 15px; font-size: 12px;
+            cursor: pointer; margin-top: 15px; font-size: 13px;
             text-transform: uppercase; letter-spacing: 1px;
         }
 
@@ -150,8 +160,11 @@
         <div class="tasa-dia">TASA BCV: 36.50 Bs | TASA PARALELO: 44.20 Bs</div>
     </header>
 
-    <div class="status-bar" id="status-bar">
-        <span>SISTEMA ACTIVO: <span id="live-user">@Vnezla_User</span> recargó <span id="live-pack">572</span>💎</span>
+    <div class="status-bar">
+        <div class="dot-online"></div>
+        <div class="status-text">
+            ESTADO: <b>ONLINE</b> | ENTREGA: <b>5-10 MIN</b>
+        </div>
     </div>
 
     <div class="section">
@@ -169,50 +182,31 @@
             <div class="diamond-card" onclick="selectPack(this, '3060 Bs')"><b>💎 572</b> <span>3060 Bs</span></div>
             <div class="diamond-card" onclick="selectPack(this, '6000 Bs')"><b>💎 1155</b> <span>6000 Bs</span></div>
             <div class="diamond-card" onclick="selectPack(this, '2100 Bs')"><b>🔥 Booyah</b> <span>2100 Bs</span></div>
-
-            </div>
+        </div>
     </div>
 
     <div class="section">
         <div class="step-header"><div class="step-num">3</div> PAGO MÓVIL</div>
         <div class="payment-box">
-            <div class="payment-info">
-                <span style="font-size: 10px; color: #555;">TOTAL A PAGAR:</span><br>
-                <span class="total-val" id="payment-price">1205 Bs</span>
-                
-                <div class="bank-data-row" style="margin-top:10px;">
-                    <span><b>Banesco (0134)</b></span>
+            <span class="total-label">TOTAL A PAGAR:</span>
+            <span class="total-val" id="payment-price">1205 Bs</span>
+            
+            <div class="bank-info-container">
+                <div class="bank-data-row">
+                    <span><b>Banco:</b> Banesco (0134)</span>
                     <button class="mini-btn-copy" onclick="copyText('Banesco')">COPY</button>
                 </div>
                 <div class="bank-data-row">
-                    <span>04248018068</span>
+                    <span><b>Tel:</b> 04248018068</span>
                     <button class="mini-btn-copy" onclick="copyText('04248018068')">COPY</button>
                 </div>
                 <div class="bank-data-row">
-                    <span>V-30870489</span>
+                    <span><b>Rif/Cédula:</b> V-30870489</span>
                     <button class="mini-btn-copy" onclick="copyText('V-30870489')">COPY</button>
                 </div>
             </div>
-
-            <div class="bank-selector-advanced">
-                <span style="font-size: 8px; color: #666; font-weight: bold;">TU BANCO</span>
-                <div class="grid-bancos">
-                    <div class="tag-banco" onclick="activateBank(this, 'Banesco')">
-                        <img src="https://img.icons8.com/color/48/bank.png"><span>BANESCO</span>
-                    </div>
-                    <div class="tag-banco" onclick="activateBank(this, 'BDV')">
-                        <img src="https://img.icons8.com/color/48/museum.png"><span>VZLA</span>
-                    </div>
-                    <div class="tag-banco" onclick="activateBank(this, 'Mercantil')">
-                        <img src="https://img.icons8.com/color/48/library.png"><span>MERCAN.</span>
-                    </div>
-                    <div class="tag-banco" onclick="activateBank(this, 'Provincial')">
-                        <img src="https://img.icons8.com/color/48/office.png"><span>PROV.</span>
-                    </div>
-                </div>
-            </div>
         </div>
-        <button class="btn-main" id="main-btn" onclick="copyAll()">COPIAR DATOS</button>
+        <button class="btn-main" id="main-btn" onclick="copyAll()">COPIAR DATOS DE PAGO</button>
     </div>
 
     <div class="section">
@@ -227,44 +221,27 @@
 </div>
 
 <script>
-    // Lógica de Selección de Diamantes (Arreglado)
     function selectPack(el, price) {
         document.querySelectorAll('.diamond-card').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
         document.getElementById('payment-price').innerText = price;
     }
 
-    // Lógica del Selector de Bancos (Arreglado con Iconos)
-    function activateBank(el, name) {
-        document.querySelectorAll('.tag-banco').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        document.getElementById('main-btn').innerText = `PAGAR EN APP ${name.toUpperCase()}`;
-        document.getElementById('main-btn').style.background = "var(--accent-green)";
-    }
-
-    // Copia individual
     function copyText(txt) {
         navigator.clipboard.writeText(txt);
         alert("Copiado: " + txt);
     }
 
-    // Copia total
     function copyAll() {
         navigator.clipboard.writeText("04248018068, V-30870489, Banesco");
         const btn = document.getElementById('main-btn');
         btn.innerText = "¡DATOS COPIADOS!";
-        setTimeout(() => { btn.innerText = "COPIAR DATOS"; }, 2000);
+        btn.style.background = "var(--accent-green)";
+        setTimeout(() => { 
+            btn.innerText = "COPIAR DATOS DE PAGO"; 
+            btn.style.background = "var(--neon-blue)";
+        }, 2000);
     }
-
-    // Lógica del Sistema Activo Dinámico (Corregido)
-    const users = ["@Gamer_FF", "@ProVzla", "@Killer_FF", "@Santi_FF", "@Mafer_01"];
-    const packs = ["110", "220", "572", "1155"];
-    
-    function updateLiveFeed() {
-        document.getElementById('live-user').innerText = users[Math.floor(Math.random()*users.length)];
-        document.getElementById('live-pack').innerText = packs[Math.floor(Math.random()*packs.length)];
-    }
-    setInterval(updateLiveFeed, 8000); // Cambia cada 8 segundos
 </script>
 
 </body>
