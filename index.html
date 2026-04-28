@@ -6,160 +6,110 @@
     <title>Irecarga.Ve | Elite Service</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
-       (function(){
-          emailjs.init("HngK3XNAmlVJW3x2z");
-       })();
+       (function(){ emailjs.init("HngK3XNAmlVJW3x2z"); })();
     </script>
-
     <style>
         :root {
             --bg-color: #030305;
-            --card-bg: rgba(15, 15, 25, 0.9);
+            --card-bg: rgba(15, 15, 25, 0.8);
             --neon-blue: #00d2ff;
             --neon-purple: #9d50bb;
             --accent-green: #00ff88;
+            --accent-red: #ff4b2b;
             --text-main: #ffffff;
         }
-
         body {
             background-color: var(--bg-color);
             background-image: radial-gradient(circle at 50% -20%, #1a1a3a 0%, #050505 80%);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            margin: 0; padding: 15px;
+            margin: 0; padding: 10px;
             display: flex; justify-content: center;
         }
-
-        .container { max-width: 480px; width: 100%; }
-
+        .container { max-width: 400px; width: 100%; }
         .header {
-            text-align: center; padding: 20px; background: var(--card-bg);
-            border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 15px;
+            text-align: center; padding: 10px; background: var(--card-bg);
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 6px;
         }
         .header h1 { 
-            font-family: 'Orbitron', sans-serif; font-size: 24px; margin: 0;
+            font-family: 'Orbitron', sans-serif; font-size: 18px; margin: 0;
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .tasa-dia { font-size: 11px; color: #888; margin-top: 8px; font-weight: 600; }
-
+        .tasa-dia { font-size: 9px; color: #888; margin-top: 2px; }
         .status-bar {
-            background: rgba(0, 255, 136, 0.05); 
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            padding: 12px 15px; border-radius: 12px; margin-bottom: 15px;
-            font-size: 13px; font-family: 'Rajdhani', sans-serif;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            font-weight: 700; text-transform: uppercase;
+            background: rgba(0, 255, 136, 0.03); border: 1px solid rgba(0, 255, 136, 0.1);
+            padding: 6px; border-radius: 8px; margin-bottom: 6px;
+            font-size: 10px; font-family: 'Rajdhani', sans-serif;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-
-        .dot-online {
-            width: 10px; height: 10px; background-color: var(--accent-green);
-            border-radius: 50%; box-shadow: 0 0 8px var(--accent-green);
-            animation: pulse-green 2s infinite ease-in-out;
-        }
-
-        @keyframes pulse-green {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
         .section {
-            background: var(--card-bg); border-radius: 20px; padding: 15px;
-            margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.03);
+            background: var(--card-bg); border-radius: 12px; padding: 10px;
+            margin-bottom: 6px; border: 1px solid rgba(255,255,255,0.02);
         }
-
         .step-header {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
-            font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 16px;
+            display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+            font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 13px;
         }
         .step-num {
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            width: 28px; height: 28px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center; font-size: 14px;
+            width: 20px; height: 20px; border-radius: 5px;
+            display: flex; align-items: center; justify-content: center; font-size: 11px;
         }
-
-        input[type="text"], input[type="file"] {
+        input[type="text"], input[type="email"], input[type="file"] {
             width: 100%; box-sizing: border-box;
-            background: rgba(0, 0, 0, 0.5); border: 1px solid #333;
-            padding: 12px; border-radius: 10px; color: white; outline: none; margin-top: 5px;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid #222;
+            padding: 8px; border-radius: 6px; color: white; font-size: 12px;
         }
-
-        .diamond-grid { 
-            display: grid; grid-template-columns: repeat(3, 1fr); 
-            gap: 8px; margin-bottom: 10px;
-        }
+        .diamond-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
         .diamond-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px; padding: 10px 5px; text-align: center; 
-            cursor: pointer; transition: 0.2s; font-size: 11px;
+            background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px; padding: 5px 2px; text-align: center; cursor: pointer; font-size: 9px;
         }
-        .diamond-card b { display: block; font-size: 13px; margin-bottom: 2px; }
-        .diamond-card span { color: var(--accent-green); font-weight: 600; }
-        .diamond-card.active {
-            border-color: var(--neon-blue);
-            background: linear-gradient(135deg, rgba(0, 210, 255, 0.15), rgba(157, 80, 187, 0.15));
-        }
-
-        .payment-box {
-            background: #000; border-radius: 15px; padding: 18px;
-            border: 1px dashed rgba(0, 210, 255, 0.3); text-align: center;
-        }
-        .total-val { color: var(--accent-green); font-size: 28px; font-weight: bold; display: block; margin-bottom: 15px; }
-        
+        .diamond-card b { display: block; font-size: 11px; }
+        .diamond-card.active { border-color: var(--neon-blue); background: rgba(0, 210, 255, 0.05); }
+        .payment-box { text-align: center; padding: 2px 0; }
+        .total-val { color: var(--accent-green); font-size: 20px; font-weight: bold; margin-bottom: 5px; display: block; }
         .bank-info-container {
-            background: rgba(255,255,255,0.03); border-radius: 10px; padding: 10px;
+            background: rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 6px;
+            border: 1px solid rgba(0, 210, 255, 0.1);
         }
-
-        .bank-data-row {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 8px; font-size: 14px;
-        }
-        
+        .bank-data-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; font-size: 11px; }
         .mini-btn-copy {
-            background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.2);
-            color: var(--neon-blue); font-size: 9px; padding: 4px 8px;
-            border-radius: 5px; cursor: pointer; font-family: 'Orbitron';
+            background: transparent; border: 1px solid rgba(0, 210, 255, 0.3);
+            color: var(--neon-blue); font-size: 7px; padding: 2px 5px; border-radius: 3px; cursor: pointer;
         }
-
         .btn-confirm {
-            width: 100%; padding: 16px; border-radius: 15px; border: none;
+            width: 100%; padding: 10px; border-radius: 8px; border: none;
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-            color: white; font-family: 'Orbitron', sans-serif; font-weight: 700;
-            cursor: pointer; font-size: 14px; margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+            color: white; font-family: 'Orbitron'; font-weight: 700; font-size: 11px; margin-top: 8px;
         }
-
-        #loader {
-            display: none; text-align: center; color: var(--accent-green);
-            font-family: 'Orbitron'; font-size: 12px; margin-top: 15px;
-            padding: 10px; border: 1px solid var(--accent-green); border-radius: 10px;
-        }
+        .footer-support { margin-top: 10px; padding: 8px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .support-title { color: var(--accent-red); font-family: 'Orbitron'; font-size: 10px; margin-bottom: 6px; }
+        .support-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #aaa; margin-bottom: 4px; }
+        .support-item a { color: var(--accent-red); text-decoration: none; font-weight: bold; }
+        #loader { display: none; text-align: center; color: var(--accent-green); font-size: 10px; margin-top: 8px; }
     </style>
 </head>
 <body>
-
 <div class="container">
     <header class="header">
         <h1>IRECARGA.VE</h1>
         <div class="tasa-dia">TASA BCV: 36.50 Bs | TASA PARALELO: 44.20 Bs</div>
     </header>
-
     <div class="status-bar">
-        <div class="dot-online"></div>
-        <div class="status-text">ESTADO: <b>ONLINE</b> | SISTEMA: <b>ACTIVO</b></div>
+        <div style="width:6px; height:6px; background:var(--accent-green); border-radius:50%;"></div>
+        ESTADO: ONLINE | SISTEMA: ACTIVO
     </div>
-
     <div class="section">
         <div class="step-header"><div class="step-num">1</div> ID JUGADOR</div>
-        <input type="text" id="player_id" placeholder="Ingresa tu ID de Free Fire...">
+        <input type="text" id="player_id" placeholder="ID Jugador...">
     </div>
-
     <div class="section">
-        <div class="step-header"><div class="step-num">2</div> ELIGE TUS DIAMANTES</div>
+        <div class="step-header"><div class="step-num">2</div> DIAMANTES</div>
         <div class="diamond-grid">
             <div class="diamond-card" onclick="selectPack(this, '600 Bs', '110')"><b>💎 110</b> <span>600 Bs</span></div>
             <div class="diamond-card active" onclick="selectPack(this, '1205 Bs', '220')"><b>💎 220</b> <span>1205 Bs</span></div>
@@ -169,114 +119,74 @@
             <div class="diamond-card" onclick="selectPack(this, '2100 Bs', 'Booyah')"><b>🔥 Booyah</b> <span>2100 Bs</span></div>
         </div>
     </div>
-
     <div class="section">
-        <div class="step-header"><div class="step-num">3</div> DATOS DE TRANSFERENCIA</div>
+        <div class="step-header"><div class="step-num">3</div> PAGO MÓVIL</div>
         <div class="payment-box">
             <span id="payment-price" class="total-val">1205 Bs</span>
             <div class="bank-info-container">
-                <div class="bank-data-row"><span><b>Banesco</b></span> <button class="mini-btn-copy" onclick="copyText('Banesco')">COPY</button></div>
+                <div class="bank-data-row"><span>Banesco</span> <button class="mini-btn-copy" onclick="copyText('Banesco')">COPY</button></div>
                 <div class="bank-data-row"><span>04248018068</span> <button class="mini-btn-copy" onclick="copyText('04248018068')">COPY</button></div>
                 <div class="bank-data-row"><span>V-30870489</span> <button class="mini-btn-copy" onclick="copyText('V-30870489')">COPY</button></div>
             </div>
         </div>
     </div>
-
     <div class="section">
-        <div class="step-header"><div class="step-num">4</div> VERIFICAR PAGO</div>
-        <input type="text" id="referencia" placeholder="Referencia de 6 dígitos...">
-        <div style="margin-top:10px; font-size: 11px; color: #888;">ADJUNTA CAPTURA DE PANTALLA:</div>
+        <div class="step-header"><div class="step-num">4</div> VERIFICAR</div>
+        <input type="email" id="email_cliente" placeholder="Tu correo..." style="margin-bottom:4px;">
+        <input type="text" id="referencia" placeholder="Ref (6 dígitos)..." style="margin-bottom:4px;">
         <input type="file" id="comprobante" accept="image/*">
-        
         <button class="btn-confirm" onclick="enviarFormulario()">VERIFICAR Y RECARGAR</button>
-        <div id="loader">CONECTANDO CON EL SERVIDOR... ESPERE</div>
+        <div id="loader">PROCESANDO SOLICITUD...</div>
+    </div>
+    <div class="footer-support">
+        <div class="support-title">CONTACTO Y SOPORTE</div>
+        <div class="support-item">📍 Porlamar, Nueva Esparta, Venezuela</div>
+        <div class="support-item">⏰ Lun a Dom: 8:00 AM - 10:00 PM</div>
+        <div class="support-item">✉️ <a href="mailto:soporte@irecarga.ve">soporte@irecarga.ve</a></div>
     </div>
 </div>
-
 <script>
     const SUPABASE_URL = "https://vlrryjmiyohkvupkofkz.supabase.co";
     const SUPABASE_KEY = "sb_publishable_IGiK6-fjl3Xeh3Yr93Z9LA_JGN281YQ";
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
     let selectedPackValue = "220";
-
     function selectPack(el, price, diamonds) {
         document.querySelectorAll('.diamond-card').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
         document.getElementById('payment-price').innerText = price;
         selectedPackValue = diamonds;
     }
-
     function copyText(txt) {
         navigator.clipboard.writeText(txt);
-        alert("Copiado: " + txt);
+        alert("Copiado");
     }
-
     async function enviarFormulario() {
         const id = document.getElementById('player_id').value;
+        const mail = document.getElementById('email_cliente').value;
         const ref = document.getElementById('referencia').value;
         const file = document.getElementById('comprobante').files[0];
         const loader = document.getElementById('loader');
-        
-        // CAPTURAMOS EL PRECIO DE LA PANTALLA
         const precioActual = document.getElementById('payment-price').innerText;
-
-        if(!id || !ref || !file) {
-            alert("⚠️ Error: Complete todos los campos.");
-            return;
-        }
-
+        if(!id || !mail || !ref || !file) return alert("Faltan datos");
         loader.style.display = "block";
-        loader.innerText = "SINCRONIZANDO CON GARENA...";
-
+        const ordenId = "ORD-" + Math.floor(Math.random()*9000 + 1000);
         try {
             const fileName = `pagos/${Date.now()}_${id}.png`;
-            const { error: uploadError } = await _supabase.storage
-                .from('Comprobantes')
-                .upload(fileName, file);
-
-            if (uploadError) throw uploadError;
-
+            await _supabase.storage.from('Comprobantes').upload(fileName, file);
             const { data: urlData } = _supabase.storage.from('Comprobantes').getPublicUrl(fileName);
-
-            const { error: dbError } = await _supabase
-                .from("irecarga's.ve")
-                .insert([{
-                    player_id: id,
-                    paquete: selectedPackValue,
-                    monto_bs: precioActual, // <--- AQUÍ SE GUARDA EL MONTO AHORA
-                    referencia: ref,
-                    capture_url: urlData.publicUrl,
-                    status: 'pendiente'
-                }]);
-
-            if (dbError) throw dbError;
-
-            // ENVÍO DE CORREO (Incluyendo el monto)
-            const emailParams = {
-                player_id: id,
-                paquete: selectedPackValue,
-                monto: precioActual,
-                referencia: ref,
-                capture_url: urlData.publicUrl
-            };
-
-            emailjs.send('servicio_irecarga', 'template_0pqg9v7', emailParams)
-                .then(() => {
-                    console.log("Aviso enviado al correo");
-                });
-
-            loader.style.borderColor = "var(--accent-green)";
-            loader.innerText = "✅ PAGO RECIBIDO. VALIDANDO REFERENCIA...";
-            
-            setTimeout(() => {
-                alert("SISTEMA: Datos enviados correctamente. Tu recarga de " + selectedPackValue + " diamantes será procesada automáticamente.");
-                location.reload();
-            }, 2000);
-
+            await _supabase.from("irecarga's.ve").insert([{
+                player_id: id, paquete: selectedPackValue, monto_bs: precioActual,
+                email_cliente: mail, referencia: ref, capture_url: urlData.publicUrl, status: 'pendiente'
+            }]);
+            await emailjs.send('servicio_irecarga', 'template_0pqg9v7', {
+                to_email: mail, player_id: id, paquete: selectedPackValue,
+                monto_bs: precioActual, referencia: ref, capture_url: urlData.publicUrl, orden_id: ordenId
+            });
+            loader.innerText = "✅ ENVIADO CON ÉXITO";
+            setTimeout(() => location.reload(), 2000);
         } catch (err) {
-            alert("SISTEMA: Error en la conexión. Intente de nuevo.");
-            console.error(err);
+            alert("Error");
+            loader.style.display = "none";
         }
     }
 </script>
