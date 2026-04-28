@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Irecarga.Ve | Elite Service</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --bg-color: #030305;
@@ -26,7 +27,6 @@
 
         .container { max-width: 480px; width: 100%; }
 
-        /* --- HEADER --- */
         .header {
             text-align: center; padding: 20px; background: var(--card-bg);
             border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
@@ -42,7 +42,6 @@
             letter-spacing: 1px; font-weight: 600;
         }
 
-        /* --- NUEVO ESTADO ONLINE (PUNTO PARPADEANTE) --- */
         .status-bar {
             background: rgba(0, 255, 136, 0.05); 
             border: 1px solid rgba(0, 255, 136, 0.2);
@@ -68,7 +67,6 @@
 
         .status-text b { color: var(--accent-green); }
 
-        /* --- SECCIONES --- */
         .section {
             background: var(--card-bg); border-radius: 20px; padding: 15px;
             margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.03);
@@ -90,7 +88,6 @@
             padding: 12px; border-radius: 10px; color: white; outline: none;
         }
 
-        /* --- GRID DIAMANTES --- */
         .diamond-grid { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
@@ -109,7 +106,6 @@
             background: linear-gradient(135deg, rgba(0, 210, 255, 0.15), rgba(157, 80, 187, 0.15));
         }
 
-        /* --- PAGO MÓVIL --- */
         .payment-box {
             background: #000; border-radius: 15px; padding: 18px;
             border: 1px dashed rgba(0, 210, 255, 0.3);
@@ -143,7 +139,6 @@
             text-transform: uppercase; letter-spacing: 1px;
         }
 
-        /* --- CONTACTO --- */
         .btn-ws {
             width: 100%; padding: 15px; border-radius: 15px; border: none;
             background: linear-gradient(90deg, #25d366, #128c7e);
@@ -169,7 +164,7 @@
 
     <div class="section">
         <div class="step-header"><div class="step-num">1</div> ID JUGADOR</div>
-        <input type="text" placeholder="Ingresa tu ID de Free Fire...">
+        <input type="text" id="player_id_input" placeholder="Ingresa tu ID de Free Fire...">
     </div>
 
     <div class="section">
@@ -178,7 +173,6 @@
             <div class="diamond-card" onclick="selectPack(this, '600 Bs')"><b>💎 110</b> <span>600 Bs</span></div>
             <div class="diamond-card active" onclick="selectPack(this, '1205 Bs')"><b>💎 220</b> <span>1205 Bs</span></div>
             <div class="diamond-card" onclick="selectPack(this, '1815 Bs')"><b>💎 341</b> <span>1815 Bs</span></div>
-            
             <div class="diamond-card" onclick="selectPack(this, '3060 Bs')"><b>💎 572</b> <span>3060 Bs</span></div>
             <div class="diamond-card" onclick="selectPack(this, '6000 Bs')"><b>💎 1155</b> <span>6000 Bs</span></div>
             <div class="diamond-card" onclick="selectPack(this, '2100 Bs')"><b>🔥 Booyah</b> <span>2100 Bs</span></div>
@@ -210,17 +204,27 @@
     </div>
 
     <div class="section">
+        <div class="step-header"><div class="step-num">4</div> REFERENCIA BANCARIA</div>
+        <input type="text" id="ref_input" placeholder="Ingresa los últimos 4 o 6 dígitos...">
+    </div>
+
+    <div class="section">
         <div style="font-family: 'Orbitron'; font-size: 12px; color: #ff4444; margin-bottom: 10px;">SOPORTE TÉCNICO</div>
         <div style="font-size: 13px; color: #ccc; line-height: 1.8;">
             📍 Porlamar, Nueva Esparta, Venezuela<br>
             🕒 Lun a Dom: 8:00 AM - 10:00 PM<br>
             ✉️ <a href="mailto:soporte@irecarga.ve" style="color: #ff4444; text-decoration: none; font-weight: 600;">soporte@irecarga.ve</a>
         </div>
-        <button class="btn-ws" onclick="window.location.href='https://wa.me/584248018068'">CONFIRMAR EN WHATSAPP</button>
+        <button class="btn-ws" onclick="confirmarYEnviar()">CONFIRMAR RECARGA</button>
     </div>
 </div>
 
 <script>
+    // CONFIGURACIÓN SUPABASE
+    const SUPABASE_URL = "https://vlrryjmiyohkvupkofkz.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_IGiK6-fjl3Xeh3Yr93Z9LA_JGN281YQ";
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
     function selectPack(el, price) {
         document.querySelectorAll('.diamond-card').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
@@ -241,6 +245,43 @@
             btn.innerText = "COPIAR DATOS DE PAGO"; 
             btn.style.background = "var(--neon-blue)";
         }, 2000);
+    }
+
+    // FUNCIÓN PRINCIPAL
+    async function confirmarYEnviar() {
+        const id = document.getElementById('player_id_input').value;
+        const ref = document.getElementById('ref_input').value;
+        const pack = document.querySelector('.diamond-card.active b').innerText;
+        const monto = document.getElementById('payment-price').innerText;
+
+        if (!id || !ref) {
+            alert("⚠️ Por favor, ingresa el ID y la Referencia de pago.");
+            return;
+        }
+
+        try {
+            // Guardar en Supabase
+            const { error } = await _supabase
+                .from("irecarga's.ve")
+                .insert([{ 
+                    player_id: id, 
+                    paquete: pack, 
+                    monto_bs: monto, 
+                    referencia: ref, 
+                    status: 'pendiente' 
+                }]);
+
+            if (error) throw error;
+
+            alert("✅ Registro exitoso. Abriendo WhatsApp...");
+
+            // Abrir WhatsApp
+            const mensaje = `Hola! Realicé un pago en irecarga.ve:%0A🆔 ID: ${id}%0A💎 Pack: ${pack}%0A💰 Monto: ${monto}%0A🔢 Ref: ${ref}`;
+            window.location.href = `https://wa.me/584248018068?text=${mensaje}`;
+
+        } catch (err) {
+            alert("❌ Error al registrar: " + err.message);
+        }
     }
 </script>
 
