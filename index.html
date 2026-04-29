@@ -46,6 +46,13 @@
             font-size: 10px; font-family: 'Rajdhani', sans-serif;
             display: flex; align-items: center; justify-content: center; gap: 6px;
         }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
         .section {
             background: var(--card-bg); border-radius: 12px; padding: 10px;
             margin-bottom: 6px; border: 1px solid rgba(255,255,255,0.02);
@@ -70,6 +77,10 @@
             border-radius: 8px; padding: 5px 2px; text-align: center; cursor: pointer; font-size: 9px;
         }
         .diamond-card b { display: block; font-size: 11px; }
+        
+        /* CAMBIO: Montos en bolívares ahora en color verde */
+        .diamond-card span { color: var(--accent-green); display: block; margin-top: 2px; }
+        
         .diamond-card.active { border-color: var(--neon-blue); background: rgba(0, 210, 255, 0.05); }
         .payment-box { text-align: center; padding: 2px 0; }
         .total-val { color: var(--accent-green); font-size: 20px; font-weight: bold; margin-bottom: 5px; display: block; }
@@ -98,11 +109,11 @@
 <div class="container">
     <header class="header">
         <h1>IRECARGA.VE</h1>
-        <div class="tasa-dia">TASA BCV: 36.50 Bs | TASA PARALELO: 44.20 Bs</div>
+        <div class="tasa-dia">PAGOS NACIONALES E INTERNACIONALES | ENTREGA INMEDIATA</div>
     </header>
     <div class="status-bar">
-        <div style="width:6px; height:6px; background:var(--accent-green); border-radius:50%;"></div>
-        ESTADO: ONLINE | SISTEMA: ACTIVO
+        <div style="width:6px; height:6px; background:var(--accent-green); border-radius:50%; animation: pulse 2s infinite ease-in-out;"></div>
+        <span style="display:inline-flex; align-items:center;">ESTADO: ONLINE | SISTEMA: ACTIVO</span>
     </div>
     <div class="section">
         <div class="step-header"><div class="step-num">1</div> ID JUGADOR</div>
@@ -174,10 +185,13 @@
             const fileName = `pagos/${Date.now()}_${id}.png`;
             await _supabase.storage.from('Comprobantes').upload(fileName, file);
             const { data: urlData } = _supabase.storage.from('Comprobantes').getPublicUrl(fileName);
-            await _supabase.from("irecarga's.ve").insert([{
+            
+            // CONEXIÓN TÉCNICA: Sincronizada con tabla 'ventas'
+            await _supabase.from("ventas").insert([{
                 player_id: id, paquete: selectedPackValue, monto_bs: precioActual,
                 email_cliente: mail, referencia: ref, capture_url: urlData.publicUrl, status: 'pendiente'
             }]);
+
             await emailjs.send('servicio_irecarga', 'template_0pqg9v7', {
                 to_email: mail, player_id: id, paquete: selectedPackValue,
                 monto_bs: precioActual, referencia: ref, capture_url: urlData.publicUrl, orden_id: ordenId
@@ -185,7 +199,7 @@
             loader.innerText = "✅ ENVIADO CON ÉXITO";
             setTimeout(() => location.reload(), 2000);
         } catch (err) {
-            alert("Error");
+            alert("Error al enviar. Intenta de nuevo.");
             loader.style.display = "none";
         }
     }
