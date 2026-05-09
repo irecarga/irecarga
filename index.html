@@ -19,6 +19,7 @@
             --accent-green: #00ff88;
             --accent-red: #ff4b2b;
             --text-main: #ffffff;
+            --whatsapp-green: #25D366;
         }
         body {
             background-color: var(--bg-color);
@@ -29,17 +30,44 @@
             display: flex; justify-content: center;
         }
         .container { max-width: 400px; width: 100%; }
+
         .header {
-            text-align: center; padding: 10px; background: var(--card-bg);
-            border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 8px;
         }
         .header h1 { 
-            font-family: 'Orbitron', sans-serif; font-size: 18px; margin: 0;
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 16px; 
+            margin: 0;
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
         }
-        .tasa-dia { font-size: 9px; color: #888; margin-top: 2px; }
+
+        .support-btn-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            color: var(--whatsapp-green);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .wa-icon-mini { width: 14px; height: 14px; }
+
         .status-bar {
             background: rgba(0, 255, 136, 0.03); border: 1px solid rgba(0, 255, 136, 0.1);
             padding: 6px; border-radius: 8px; margin-bottom: 6px;
@@ -54,101 +82,227 @@
         }
 
         .section {
-            background: var(--card-bg); border-radius: 12px; padding: 10px;
-            margin-bottom: 6px; border: 1px solid rgba(255,255,255,0.02);
+            background: var(--card-bg); border-radius: 12px; padding: 12px;
+            margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.02);
         }
         .step-header {
-            display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
-            font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 13px;
+            display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+            font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 14px;
         }
         .step-num {
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            width: 20px; height: 20px; border-radius: 5px;
-            display: flex; align-items: center; justify-content: center; font-size: 11px;
+            width: 22px; height: 22px; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; font-size: 12px;
         }
+        
         input[type="text"], input[type="email"], input[type="file"] {
             width: 100%; box-sizing: border-box;
             background: rgba(0, 0, 0, 0.4); border: 1px solid #222;
-            padding: 8px; border-radius: 6px; color: white; font-size: 12px;
+            padding: 8px 10px; border-radius: 8px; color: white; font-size: 12px;
         }
-        .diamond-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+
+        /* ACTUALIZACIÓN: ETIQUETAS DE RECARGA MEJORADAS */
+        .type-label {
+            font-family: 'Rajdhani', sans-serif; /* Fuente mejorada */
+            font-size: 12px; /* Tamaño mejorado */
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .label-auto { color: #FFB800; }
+        .label-manual { color: #FFB800; margin-top: 12px; } /* Color cambiado a amarillo */
+
+        .diamond-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
         .diamond-card {
-            background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 8px; padding: 5px 2px; text-align: center; cursor: pointer; font-size: 9px;
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px; padding: 8px 4px; text-align: center; cursor: pointer; font-size: 10px;
+            transition: 0.2s;
         }
-        .diamond-card b { display: block; font-size: 11px; }
+        .diamond-card b { display: block; font-size: 11px; margin-bottom: 2px; }
+        .diamond-card span { color: var(--accent-green); display: block; font-weight: bold; }
+        .diamond-card.active { border-color: var(--neon-blue); background: rgba(0, 210, 255, 0.08); box-shadow: 0 0 10px rgba(0, 210, 255, 0.1); }
         
-        /* CAMBIO: Montos en bolívares ahora en color verde */
-        .diamond-card span { color: var(--accent-green); display: block; margin-top: 2px; }
-        
-        .diamond-card.active { border-color: var(--neon-blue); background: rgba(0, 210, 255, 0.05); }
-        .payment-box { text-align: center; padding: 2px 0; }
-        .total-val { color: var(--accent-green); font-size: 20px; font-weight: bold; margin-bottom: 5px; display: block; }
-        .bank-info-container {
-            background: rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 6px;
-            border: 1px solid rgba(0, 210, 255, 0.1);
+        .total-container {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 15px;
         }
-        .bank-data-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; font-size: 11px; }
-        .mini-btn-copy {
-            background: transparent; border: 1px solid rgba(0, 210, 255, 0.3);
-            color: var(--neon-blue); font-size: 7px; padding: 2px 5px; border-radius: 3px; cursor: pointer;
+        .total-label { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 500; color: #aaa; }
+        .total-val { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: bold; color: #ffffff; }
+
+        .pago-datos-container {
+            background-color: rgba(255, 255, 255, 0.01);
+            border-radius: 12px;
+            padding: 8px;
+            border: 1px solid rgba(255,255,255,0.04);
         }
-        .btn-confirm {
-            width: 100%; padding: 10px; border-radius: 8px; border: none;
+        .pago-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .pago-row:last-child { border-bottom: none; }
+        .pago-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            font-size: 11px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+        }
+        .pago-icon { width: 13px; height: 13px; color: #888; }
+        .pago-btn-copiar {
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-            color: white; font-family: 'Orbitron'; font-weight: 700; font-size: 11px; margin-top: 8px;
+            color: white;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
         }
-        .footer-support { margin-top: 10px; padding: 8px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .support-title { color: var(--accent-red); font-family: 'Orbitron'; font-size: 10px; margin-bottom: 6px; }
-        .support-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #aaa; margin-bottom: 4px; }
+        .pago-btn-todos {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-confirm {
+            width: 100%; padding: 10px; border-radius: 10px; border: none;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: white; font-family: 'Orbitron'; font-weight: 700; font-size: 11px; margin-top: 10px; cursor: pointer;
+        }
+        
+        .footer-support { margin-top: 15px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .support-title { color: var(--accent-red); font-family: 'Orbitron'; font-size: 11px; margin-bottom: 8px; letter-spacing: 1px; }
+        .support-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #888; margin-bottom: 6px; }
         .support-item a { color: var(--accent-red); text-decoration: none; font-weight: bold; }
-        #loader { display: none; text-align: center; color: var(--accent-green); font-size: 10px; margin-top: 8px; }
+        .support-item a:hover { text-decoration: underline; }
+        
+        #loader { display: none; text-align: center; color: var(--accent-green); font-size: 11px; margin-top: 10px; font-weight: bold; }
+
+        #exit-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+        .exit-content {
+            background: #0a0a0f; border: 1px solid var(--neon-blue); border-radius: 20px;
+            max-width: 340px; width: 100%; padding: 30px; text-align: center;
+        }
+        .exit-title { font-family: 'Orbitron'; font-size: 18px; margin-bottom: 15px; color: var(--neon-blue); }
     </style>
 </head>
 <body>
 <div class="container">
     <header class="header">
         <h1>IRECARGA.VE</h1>
-        <div class="tasa-dia">PAGOS NACIONALES E INTERNACIONALES | ENTREGA INMEDIATA</div>
+        <a href="https://wa.me/584248018068" target="_blank" class="support-btn-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" class="wa-icon-mini">
+            Ayuda
+        </a>
     </header>
+
     <div class="status-bar">
         <div style="width:6px; height:6px; background:var(--accent-green); border-radius:50%; animation: pulse 2s infinite ease-in-out;"></div>
-        <span style="display:inline-flex; align-items:center;">ESTADO: ONLINE | SISTEMA: ACTIVO</span>
+        <span>ESTADO: ONLINE | SISTEMA: ACTIVO</span>
     </div>
+
     <div class="section">
         <div class="step-header"><div class="step-num">1</div> ID JUGADOR</div>
         <input type="text" id="player_id" placeholder="ID Jugador...">
     </div>
+
     <div class="section">
         <div class="step-header"><div class="step-num">2</div> DIAMANTES</div>
+        
+        <div class="type-label label-auto">⚡ AUTOMÁTICO 24/7</div>
         <div class="diamond-grid">
-            <div class="diamond-card" onclick="selectPack(this, '600 Bs', '110')"><b>💎 110</b> <span>600 Bs</span></div>
-            <div class="diamond-card active" onclick="selectPack(this, '1205 Bs', '220')"><b>💎 220</b> <span>1205 Bs</span></div>
-            <div class="diamond-card" onclick="selectPack(this, '1815 Bs', '341')"><b>💎 341</b> <span>1815 Bs</span></div>
-            <div class="diamond-card" onclick="selectPack(this, '3060 Bs', '572')"><b>💎 572</b> <span>3060 Bs</span></div>
-            <div class="diamond-card" onclick="selectPack(this, '6000 Bs', '1155')"><b>💎 1155</b> <span>6000 Bs</span></div>
-            <div class="diamond-card" onclick="selectPack(this, '2100 Bs', 'Booyah')"><b>🔥 Booyah</b> <span>2100 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '618 Bs', '110')"><b>💎 110</b> <span>618 Bs</span></div>
+            <div class="diamond-card active" onclick="selectPack(this, '1248 Bs', '220')"><b>💎 220</b> <span>1248 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '1956 Bs', '341')"><b>💎 341</b> <span>1956 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '3088 Bs', '572')"><b>💎 572</b> <span>3088 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '3770 Bs', '682')"><b>💎 682</b> <span>3770 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '5688 Bs', '1166')"><b>💎 1166</b> <span>5688 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '11375 Bs', '2398')"><b>💎 2398</b> <span>11375 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '17095 Bs', '3564')"><b>💎 3564</b> <span>17095 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '22750 Bs', '4796')"><b>💎 4796</b> <span>22750 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '28275 Bs', '6160')"><b>💎 6160</b> <span>28275 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '55900 Bs', '12320')"><b>💎 12320</b> <span>55900 Bs</span></div>
+            <div class="diamond-card" onclick="selectPack(this, '1956 Bs', 'P. Booyah')"><b>🔥 P. Booyah</b> <span>1956 Bs</span></div>
+        </div>
+
+        <div class="type-label label-manual">🗣️ RECARGA MANUAL ?</div>
+        <div class="diamond-grid" style="grid-template-columns: 1fr;">
+            <div class="diamond-card" onclick="selectPack(this, '7930 Bs', 'M. Mensual')"><b>📑 M. Mensual</b> <span>7930 Bs</span></div>
+        </div>
+
+        <div class="total-container">
+            <span class="total-label">Total</span>
+            <span id="payment-price" class="total-val">1248 Bs</span>
         </div>
     </div>
+
     <div class="section">
-        <div class="step-header"><div class="step-num">3</div> PAGO MÓVIL</div>
-        <div class="payment-box">
-            <span id="payment-price" class="total-val">1205 Bs</span>
-            <div class="bank-info-container">
-                <div class="bank-data-row"><span>Banesco</span> <button class="mini-btn-copy" onclick="copyText('Banesco')">COPY</button></div>
-                <div class="bank-data-row"><span>04248018068</span> <button class="mini-btn-copy" onclick="copyText('04248018068')">COPY</button></div>
-                <div class="bank-data-row"><span>V-30870489</span> <button class="mini-btn-copy" onclick="copyText('V-30870489')">COPY</button></div>
+        <div class="step-header"><div class="step-num">3</div> DATOS DE PAGO</div>
+        <div class="pago-datos-container">
+            <div class="pago-row">
+                <div class="pago-left">
+                    <svg class="pago-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3l9 7v2H3v-2l9-7z"></path></svg>
+                    <span>BANESCO (0134)</span>
+                </div>
+                <button class="pago-btn-copiar" onclick="copyText('BANESCO (0134)')">Copiar</button>
             </div>
+            <div class="pago-row">
+                <div class="pago-left">
+                    <svg class="pago-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span>30870489</span>
+                </div>
+                <button class="pago-btn-copiar" onclick="copyText('30870489')">Copiar</button>
+            </div>
+            <div class="pago-row">
+                <div class="pago-left">
+                    <svg class="pago-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span>04248018068</span>
+                </div>
+                <button class="pago-btn-copiar" onclick="copyText('04248018068')">Copiar</button>
+            </div>
+            <button class="pago-btn-todos" onclick="copiarTodosDatos()">COPIAR TODO</button>
         </div>
     </div>
+
     <div class="section">
         <div class="step-header"><div class="step-num">4</div> VERIFICAR</div>
-        <input type="email" id="email_cliente" placeholder="Tu correo..." style="margin-bottom:4px;">
-        <input type="text" id="referencia" placeholder="Ref (6 dígitos)..." style="margin-bottom:4px;">
-        <input type="file" id="comprobante" accept="image/*">
+        <input type="email" id="email_cliente" placeholder="Tu correo..." style="margin-bottom:6px;">
+        <input type="text" id="referencia" placeholder="Ref (6 dígitos)..." style="margin-bottom:6px;">
+        <input type="file" id="comprobante" accept="image/*" style="margin-bottom:6px;">
         <button class="btn-confirm" onclick="enviarFormulario()">VERIFICAR Y RECARGAR</button>
         <div id="loader">PROCESANDO SOLICITUD...</div>
     </div>
+
     <div class="footer-support">
         <div class="support-title">CONTACTO Y SOPORTE</div>
         <div class="support-item">📍 Porlamar, Nueva Esparta, Venezuela</div>
@@ -156,21 +310,43 @@
         <div class="support-item">✉️ <a href="mailto:soporte@irecarga.ve">soporte@irecarga.ve</a></div>
     </div>
 </div>
+
+<div id="exit-modal">
+    <div class="exit-content">
+        <h2 class="exit-title">¡ESTADO: PROTEGIDO!</h2>
+        <p style="font-size: 13px; color: #ccc;">Recarga de <b>💎 <span id="modal-diamonds">220</span></b> enviada.<br>Lista en 5-10 min.</p>
+        <button class="btn-confirm" onclick="closeExitModal()">FINALIZAR MI CARGA</button>
+    </div>
+</div>
+
 <script>
     const SUPABASE_URL = "https://vlrryjmiyohkvupkofkz.supabase.co";
     const SUPABASE_KEY = "sb_publishable_IGiK6-fjl3Xeh3Yr93Z9LA_JGN281YQ";
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     let selectedPackValue = "220";
+
     function selectPack(el, price, diamonds) {
         document.querySelectorAll('.diamond-card').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
         document.getElementById('payment-price').innerText = price;
         selectedPackValue = diamonds;
     }
+
     function copyText(txt) {
         navigator.clipboard.writeText(txt);
-        alert("Copiado");
+        alert("Copiado: " + txt);
     }
+
+    function copiarTodosDatos() {
+        navigator.clipboard.writeText("BANESCO (0134)\n30870489\n04248018068");
+        alert("Todos los datos copiados");
+    }
+
+    function closeExitModal() {
+        document.getElementById('exit-modal').style.display = 'none';
+        location.reload();
+    }
+
     async function enviarFormulario() {
         const id = document.getElementById('player_id').value;
         const mail = document.getElementById('email_cliente').value;
@@ -178,15 +354,15 @@
         const file = document.getElementById('comprobante').files[0];
         const loader = document.getElementById('loader');
         const precioActual = document.getElementById('payment-price').innerText;
-        if(!id || !mail || !ref || !file) return alert("Faltan datos");
+
+        if(!id || !mail || !ref || !file) return alert("Por favor complete todos los campos");
         loader.style.display = "block";
-        const ordenId = "ORD-" + Math.floor(Math.random()*9000 + 1000);
+        
         try {
             const fileName = `pagos/${Date.now()}_${id}.png`;
             await _supabase.storage.from('Comprobantes').upload(fileName, file);
             const { data: urlData } = _supabase.storage.from('Comprobantes').getPublicUrl(fileName);
             
-            // CONEXIÓN TÉCNICA: Sincronizada con tabla 'ventas'
             await _supabase.from("ventas").insert([{
                 player_id: id, paquete: selectedPackValue, monto_bs: precioActual,
                 email_cliente: mail, referencia: ref, capture_url: urlData.publicUrl, status: 'pendiente'
@@ -194,12 +370,16 @@
 
             await emailjs.send('servicio_irecarga', 'template_0pqg9v7', {
                 to_email: mail, player_id: id, paquete: selectedPackValue,
-                monto_bs: precioActual, referencia: ref, capture_url: urlData.publicUrl, orden_id: ordenId
+                monto_bs: precioActual, referencia: ref, capture_url: urlData.publicUrl
             });
+            
             loader.innerText = "✅ ENVIADO CON ÉXITO";
-            setTimeout(() => location.reload(), 2000);
+            setTimeout(() => { 
+                document.getElementById('modal-diamonds').innerText = selectedPackValue;
+                document.getElementById('exit-modal').style.display = 'flex';
+            }, 1000);
         } catch (err) {
-            alert("Error al enviar. Intenta de nuevo.");
+            alert("Error al procesar la recarga.");
             loader.style.display = "none";
         }
     }
