@@ -4,33 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Irecarga.Ve | Elite Service</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Se importan las fuentes necesarias -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&family=Inter:wght@300;400;600&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://unpkg.com/tesseract.js@2.1.4/dist/tesseract.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
        (function(){ emailjs.init("HngK3XNAmlVJW3x2z"); })();
     </script>
     <style>
-        /* CONFIGURACIÓN DE TU NUEVA FUENTE */
-        @font-face {
-            font-family: 'MiFuenteGaming';
-            src: url('MartinGaming-nA0mR.otf.ttf') format('truetype');
-        }
-
         :root {
-            --bg-color: #030305;
-            --card-bg: rgba(15, 15, 25, 0.8);
-            --neon-blue: #00d2ff;
-            --neon-purple: #9d50bb;
-            --accent-green: #00ff88;
+            /* Colores de Fondo y Tarjetas (Estilo PinXtore) */
+            --bg-color: #0B132B;                  /* Fondo azul oscuro profundo */
+            --card-bg: rgba(28, 37, 65, 0.9);      /* Fondo de tarjetas azul marino */
+            --card-border: rgba(58, 80, 107, 0.4); /* Borde sutil azul grisáceo */
+            
+            /* Colores de Acento y Botones */
+            --neon-blue: #5BC0BE;                 /* Turquesa brillante de PinXtore */
+            --neon-purple: #6366F1;               /* Violeta / Índigo acento */
+            --accent-green: #10B981;              /* Verde esmeralda para precios/éxito */
             --accent-red: #ff4b2b;
-            --text-main: #ffffff;
             --whatsapp-green: #25D366;
+
+            /* Colores de las Letras (Textos) */
+            --text-main: #FFFFFF;                 /* Títulos y textos principales en Blanco */
+            --text-secondary: #A5B4FC;            /* Textos secundarios en Lila claro */
+            --text-muted: #9CA3AF;                /* Descripciones y subtítulos en Gris claro */
         }
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% -20%, #1a1a3a 0%, #050505 80%);
+            background-image: radial-gradient(circle at 50% -20%, #1C2541 0%, #0B132B 85%);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             margin: 0; padding: 10px;
@@ -38,10 +40,9 @@
         }
         .container { max-width: 400px; width: 100%; }
 
-        /* NUEVO ESTILO CUADRO AYUDA */
         .help-modal-box {
             display: none;
-            background: rgba(15, 15, 25, 0.95);
+            background: rgba(11, 19, 43, 0.95);
             border: 1px solid var(--neon-blue);
             padding: 15px;
             border-radius: 12px;
@@ -49,59 +50,82 @@
             color: #ffffff;
             font-size: 12px;
             font-family: 'Inter', sans-serif;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+            box-shadow: 0 0 15px rgba(91, 192, 190, 0.2);
         }
         .help-modal-box b { color: var(--neon-blue); }
         .help-modal-box ul { padding-left: 18px; margin: 10px 0 0 0; }
-        .help-modal-box li { margin-bottom: 5px; color: #ccc; }
+        .help-modal-box li { margin-bottom: 5px; color: var(--text-muted); }
 
         .header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px 15px 12px 8px; /* Ajuste para pegar el logo al borde */
             background: var(--card-bg);
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid var(--card-border);
             margin-bottom: 8px;
         }
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0px; /* Sin separación para acercar la tipografía al logo */
+        }
+        .header-logo {
+            width: 100px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-left: -25px;  /* Desplaza el logo a la izquierda quitando borde transparente */
+            margin-right: -25px; /* Acerca la tipografía quitando borde transparente derecho */
+        }
         .header h1 { 
-            font-family: 'MiFuenteGaming', 'Orbitron', sans-serif; 
-            font-size: 20px; /* Ajustado ligeramente para que la fuente se vea mejor */
+            /* Tipografía 'Unbounded' más masiva, coherente con las tarjetas de paquetes */
+            font-family: 'Unbounded', sans-serif; 
+            font-weight: 900;
+            font-size: 15px; /* Tamaño adaptado para móviles */
             margin: 0;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
+            color: #FFFFFF;
+            letter-spacing: -0.3px;
         }
 
-        .header-buttons { display: flex; gap: 8px; }
+        .header-buttons { display: flex; gap: 8px; padding: 0 7px; }
 
         .support-btn-header {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
+            flex: 1;
             background: rgba(37, 211, 102, 0.1);
             border: 1px solid rgba(37, 211, 102, 0.3);
             color: var(--whatsapp-green);
-            font-family: 'Inter', sans-serif;
-            font-size: 11px;
-            font-weight: 600;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             text-decoration: none;
-            padding: 6px 10px;
-            border-radius: 8px;
+            padding: 10px 8px;
+            border-radius: 10px;
             transition: 0.3s;
+            cursor: pointer;
         }
         .channel-btn {
-            background: rgba(0, 210, 255, 0.1);
-            border: 1px solid rgba(0, 210, 255, 0.3);
+            background: rgba(91, 192, 190, 0.1);
+            border: 1px solid rgba(91, 192, 190, 0.3);
             color: var(--neon-blue);
         }
-        .wa-icon-mini { width: 14px; height: 14px; }
-        .channel-icon-mini { width: 14px; height: 14px; fill: currentColor; }
+        .resenas-btn {
+            background: rgba(255, 184, 0, 0.1);
+            border: 1px solid rgba(255, 184, 0, 0.3);
+            color: #FFB800;
+        }
+        .wa-icon-mini { width: 12px; height: 12px; }
+        .channel-icon-mini { width: 12px; height: 12px; fill: currentColor; }
 
         .status-bar {
-            background: rgba(0, 255, 136, 0.03); border: 1px solid rgba(0, 255, 136, 0.1);
+            background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1);
             padding: 6px; border-radius: 8px; margin-bottom: 6px;
             font-size: 10px; font-family: 'Rajdhani', sans-serif;
             display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -115,21 +139,23 @@
 
         .section {
             background: var(--card-bg); border-radius: 12px; padding: 12px;
-            margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.02);
+            margin-bottom: 8px; border: 1px solid var(--card-border);
         }
         .step-header {
             display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
             font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 14px;
         }
+        
         .step-num {
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            width: 22px; height: 22px; border-radius: 6px;
+            width: 26px; height: 26px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; font-size: 12px;
+            font-weight: bold; color: white;
         }
         
         input[type="text"], input[type="email"] {
             width: 100%; box-sizing: border-box;
-            background: rgba(0, 0, 0, 0.4); border: 1px solid #222;
+            background: rgba(11, 19, 43, 0.6); border: 1px solid var(--card-border);
             padding: 8px 10px; border-radius: 8px; color: white; font-size: 12px;
         }
 
@@ -139,7 +165,7 @@
         }
         .file-custom {
             width: 100%; box-sizing: border-box;
-            background: rgba(0, 210, 255, 0.05); border: 1px dashed var(--neon-blue);
+            background: rgba(91, 192, 190, 0.05); border: 1px dashed var(--neon-blue);
             padding: 10px; border-radius: 8px; color: var(--neon-blue);
             font-size: 12px; text-align: center; font-family: 'Rajdhani';
             font-weight: 700; transition: 0.3s;
@@ -175,27 +201,289 @@
         .label-auto { color: #FFB800; }
         .label-manual { color: #FFB800; margin-top: 12px; }
 
+        /* Rejilla de 3 columnas compactas con separación reducida de 6px */
         .diamond-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; min-height: 50px;}
+        
+        /* DISEÑO DE TARJETA ULTRA COMPACTO CON SUPERPOSICIÓN DE TEXTOS Y ALTURA DE 112PX */
         .diamond-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 10px; padding: 8px 4px; text-align: center; cursor: pointer; font-size: 10px;
-            transition: 0.2s;
+            background-color: #0E162F;
+            border: 1px solid var(--card-border);
+            border-radius: 8px; 
+            padding: 8px 0 0 0; /* Margen interno óptimo */
+            text-align: center; 
+            cursor: pointer; 
+            transition: 0.25s ease-in-out; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            justify-content: space-between; /* Distribución perfecta vertical */
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 112px; /* ALTURA COMPACTA */
+            box-sizing: border-box;
         }
-        .diamond-card b { display: block; font-size: 11px; margin-bottom: 2px; }
-        .diamond-card span { color: var(--accent-green); display: block; font-weight: bold; }
-        .diamond-card.active { border-color: var(--neon-blue); background: rgba(0, 210, 255, 0.08); box-shadow: 0 0 10px rgba(0, 210, 255, 0.1); }
+
+        /* Degradado oscuro automático inferior integrado en el cuadro */
+        .diamond-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(14, 22, 47, 0.95), transparent);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        /* Cabecera compacta sincronizada (Flotando sobre la imagen) */
+        .card-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 8px;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 5.5px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.3px;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2; /* Sobre la imagen */
+        }
+        .card-brand-web {
+            color: var(--neon-blue);
+        }
+
+        /* Contenedor del título central alineado (Flotando sobre la imagen) */
+        .card-title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+            margin-top: 1px; /* Baja las letras sutilmente de la esquina */
+            margin-bottom: auto;
+            padding: 0 4px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2; /* Sobre la imagen */
+        }
+        .card-qty {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 900;
+            font-size: 9px;
+            color: #FFFFFF;
+            letter-spacing: -0.3px;
+        }
+        .card-sub {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 6.5px;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 0.5px;
+        }
+        
+        /* IMAGEN ABSOLUTA: OCUPA EL 100% DEL FONDO DE LA TARJETA */
+        .diamond-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;         
+            object-fit: cover;    /* Rellena completamente el cuadro de esquina a esquina */
+            margin: 0;
+            padding: 0;
+            z-index: 1;           /* Queda de fondo, debajo de los textos */
+        }
+
+        /* Subtítulo del concepto de diamantes (Flotando sobre la imagen) */
+        .card-concept {
+            font-family: 'Inter', sans-serif;
+            font-size: 5.5px; /* Reducido para evitar desbordamientos en 112px */
+            color: rgba(255, 255, 255, 0.7); 
+            text-transform: lowercase;
+            margin-bottom: 2px;
+            padding: 0 4px;
+            font-weight: 600;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+            z-index: 2; /* Sobre la imagen */
+        }
+
+        /* Botón de precio integrado abajo (Flotando sobre la imagen) */
+        .card-price {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 8px;
+            color: var(--neon-blue);
+            background: rgba(14, 22, 47, 0.9);
+            border-top: 1px solid var(--card-border);
+            width: 100%;
+            padding: 4px 0;
+            text-align: center;
+            box-sizing: border-box;
+            transition: 0.2s;
+            position: relative;
+            z-index: 2; /* Sobre la imagen */
+        }
+        
+        /* Animaciones hover */
+        .diamond-card:hover {
+            border-color: rgba(91, 192, 190, 0.6);
+            box-shadow: 0 0 10px rgba(91, 192, 190, 0.08);
+        }
+        .diamond-card.active { 
+            border-color: var(--neon-blue); 
+            box-shadow: 0 0 12px rgba(91, 192, 190, 0.2); 
+        }
+        .diamond-card.active .card-price {
+            background: var(--neon-blue);
+            color: #0B132B;
+            border-top-color: var(--neon-blue);
+            font-weight: 800;
+        }
         
         .total-container {
             background: rgba(255, 255, 255, 0.03); padding: 10px 15px; border-radius: 12px;
             display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.1); margin-top: 15px;
+            border: 1px solid var(--card-border); margin-top: 15px;
         }
-        .total-label { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 500; color: #aaa; }
+        .total-label { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 500; color: var(--text-muted); }
         .total-val { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: bold; color: #ffffff; }
 
         .loading-text { grid-column: span 3; font-size: 10px; color: var(--neon-blue); text-align: center; padding: 20px; }
 
-        .pago-datos-container { background-color: rgba(255, 255, 255, 0.01); border-radius: 12px; padding: 8px; border: 1px solid rgba(255,255,255,0.04); }
+        .resenas-promedio { font-family: 'Orbitron', sans-serif; font-size: 13px; color: #FFB800; }
+        .resenas-lista { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+        #resenas-overlay {
+            display: none; position: fixed; inset: 0; background: var(--bg-color); z-index: 9997;
+            overflow-y: auto; padding: 16px;
+        }
+        .resenas-lista-full { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .resenas-lista-full .resena-card { width: 100%; box-sizing: border-box; }
+        .resena-card {
+            flex: 0 0 auto; width: 200px; background: rgba(11, 19, 43, 0.6); border: 1px solid var(--card-border);
+            border-radius: 10px; padding: 10px;
+        }
+        .resena-estrellas { color: #FFB800; font-size: 11px; margin-bottom: 4px; letter-spacing: 1px; }
+        .resena-texto { font-size: 11px; color: var(--text-main); line-height: 1.4; margin-bottom: 6px; }
+        .resena-alias { font-size: 9px; color: var(--text-muted); font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+
+        /* ---------- CALIFICAR (MODAL DE ÉXITO) ---------- */
+        .rating-box { border-top: 1px solid var(--card-border); margin-top: 16px; padding-top: 16px; }
+        .rating-box p { font-size: 12px; color: var(--text-muted); margin: 0 0 10px; }
+        .star-picker { display: flex; justify-content: center; gap: 6px; font-size: 26px; margin-bottom: 10px; cursor: pointer; }
+        .star-picker span { color: #3a506b; transition: 0.15s; }
+        .star-picker span.active { color: #FFB800; }
+        #resena-comentario {
+            width: 100%; box-sizing: border-box; background: rgba(11, 19, 43, 0.6); border: 1px solid var(--card-border);
+            border-radius: 8px; padding: 8px 10px; color: white; font-size: 12px; font-family: 'Inter', sans-serif;
+            margin-bottom: 8px; resize: none;
+        }
+        .btn-enviar-resena {
+            width: 100%; padding: 9px; border-radius: 8px; border: none; background: rgba(91, 192, 190, 0.15);
+            color: var(--neon-blue); font-family: 'Rajdhani'; font-weight: 700; font-size: 11px; cursor: pointer;
+            border: 1px solid rgba(91, 192, 190, 0.4);
+        }
+        .resena-gracias { text-align: center; font-size: 12px; color: var(--accent-green); font-weight: 700; padding: 8px 0; }
+
+        /* ---------- MÉTODO DE PAGO ---------- */
+        .metodo-pago-card {
+            width: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: center;
+            gap: 8px; background: rgba(11, 19, 43, 0.6); border: 1px solid var(--card-border);
+            border-radius: 10px; padding: 14px; margin-bottom: 8px; cursor: pointer; transition: 0.2s;
+        }
+        .metodo-pago-card:last-child { margin-bottom: 0; }
+        .metodo-pago-card.active {
+            border-color: var(--neon-blue); background: rgba(91, 192, 190, 0.08);
+            box-shadow: 0 0 12px rgba(91, 192, 190, 0.15);
+        }
+        .metodo-pago-card img { height: 20px; }
+        .metodo-pago-card span { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+
+        /* ---------- TELÉFONO Y CHECKBOX ---------- */
+        .phone-row { display: flex; gap: 6px; margin-bottom: 6px; position: relative; }
+        .phone-code {
+            display: flex; align-items: center; gap: 4px; background: rgba(11, 19, 43, 0.6);
+            border: 1px solid var(--card-border); border-radius: 8px; padding: 0 10px; font-size: 12px;
+            color: var(--text-muted); white-space: nowrap; cursor: pointer; user-select: none;
+        }
+        .phone-code .arrow { font-size: 9px; margin-left: 2px; color: var(--text-muted); }
+        .phone-row input { flex: 1; }
+        .country-dropdown {
+            display: none; position: absolute; top: calc(100% + 4px); left: 0; width: 220px; max-height: 260px;
+            overflow-y: auto; background: #0B132B; border: 1px solid var(--card-border); border-radius: 10px;
+            z-index: 20; box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+        .country-dropdown.open { display: block; }
+        .country-item {
+            display: flex; align-items: center; justify-content: space-between; padding: 10px 12px;
+            font-size: 12px; cursor: pointer; color: var(--text-main);
+        }
+        .country-item:hover { background: rgba(91, 192, 190, 0.1); }
+        .country-item .cname { display: flex; align-items: center; gap: 8px; }
+        .country-item .ccode { color: var(--text-muted); }
+        .check-row { display: flex; align-items: center; gap: 8px; margin: 8px 0 4px; font-size: 11px; color: var(--text-muted); }
+        .check-row input { width: 14px; height: 14px; accent-color: var(--neon-blue); }
+
+        /* ---------- MODAL DE ADVERTENCIA ---------- */
+        #warning-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+            z-index: 9998; align-items: center; justify-content: center; padding: 20px;
+        }
+        .warning-box {
+            background: var(--bg-color); border: 1px solid var(--neon-blue); border-radius: 16px;
+            max-width: 340px; width: 100%; overflow: hidden;
+        }
+        .warning-head {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); padding: 16px 20px;
+            font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 14px; text-align: center;
+            color: #0B132B;
+        }
+        .warning-body { padding: 18px 20px; }
+        .warning-item { display: flex; gap: 10px; margin-bottom: 14px; font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+        .warning-item b { color: #fff; }
+        .warning-item .icon { font-size: 16px; flex-shrink: 0; }
+        .warning-footer { text-align: center; font-size: 12px; color: var(--text-main); margin: 12px 0 16px; font-weight: 600; }
+        .btn-ok-entiendo {
+            width: 100%; padding: 12px; border-radius: 10px; border: none; background: var(--accent-green);
+            color: #06281c; font-family: 'Orbitron'; font-weight: 700; font-size: 12px; cursor: pointer;
+        }
+
+        /* ---------- PANTALLA DE CONFIRMACIÓN ---------- */
+        #confirmacion-overlay {
+            display: none; position: fixed; inset: 0; background: var(--bg-color); z-index: 9997;
+            overflow-y: auto; padding: 16px;
+        }
+        .confirm-back { display: flex; align-items: center; gap: 6px; color: var(--text-muted); font-size: 12px; margin-bottom: 12px; cursor: pointer; width: fit-content; }
+        .confirm-total-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 2px 14px; border-bottom: 1px solid var(--card-border); margin-bottom: 14px; }
+        .confirm-total-row span:first-child { font-size: 13px; color: var(--text-muted); }
+        .confirm-total-row span:last-child { font-family: 'Orbitron'; font-size: 18px; font-weight: 700; color: var(--accent-green); }
+        .confirm-section-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+        .required-badge { background: rgba(255,75,43,0.12); color: var(--accent-red); font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; letter-spacing: 0.5px; }
+        .binance-box { background: rgba(11,19,43,0.6); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 14px; }
+        .binance-box h3 { font-family: 'Rajdhani'; font-size: 15px; margin: 0 0 12px; }
+        .binance-warn { color: var(--amber, #FFB800); font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+        .binance-label { font-size: 9px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+        .binance-value { background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); border-radius: 8px; padding: 10px; font-size: 14px; margin-bottom: 8px; }
+        .binance-code { background: rgba(16,185,129,0.08); border: 1px solid var(--accent-green); border-radius: 8px; padding: 14px; font-family: 'Orbitron'; font-size: 20px; letter-spacing: 6px; color: var(--accent-green); margin-bottom: 8px; }
+        .binance-note { font-size: 11px; color: var(--text-secondary); margin-top: 10px; line-height: 1.5; }
+        .ref-extraida { background: rgba(16,185,129,0.08); border: 1px solid var(--accent-green); border-radius: 10px; padding: 12px; margin: 12px 0; }
+        .ref-extraida .label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .ref-extraida .valor { font-family: 'Orbitron'; font-size: 18px; color: var(--accent-green); margin: 4px 0; }
+        .ref-extraida .nota { font-size: 10px; color: var(--text-muted); }
+        .fraude-warn { background: rgba(255,184,0,0.08); border: 1px solid var(--amber, #FFB800); border-radius: 10px; padding: 10px 12px; font-size: 10px; color: var(--amber, #FFB800); margin: 12px 0; line-height: 1.4; }
+        .countdown-box { text-align: center; background: rgba(11,19,43,0.6); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0; }
+        .countdown-box .label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+        .countdown-box .time { font-family: 'Orbitron'; font-size: 22px; color: var(--neon-blue); }
         .pago-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
         .pago-row:last-child { border-bottom: none; }
         .pago-left { display: flex; align-items: center; gap: 8px; color: #ffffff; font-size: 11px; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
@@ -219,11 +507,11 @@
         
         #loader { display: none; text-align: center; color: var(--accent-green); font-size: 11px; margin-top: 10px; font-weight: bold; }
 
-        .footer-section { width: 100%; margin-top: 20px; padding: 30px 10px; background: rgba(5, 5, 10, 0.9); border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center; }
+        .footer-section { width: 100%; margin-top: 20px; padding: 30px 10px; background: rgba(11, 19, 43, 0.95); border-top: 1px solid var(--card-border); text-align: center; }
         .footer-title { color: var(--neon-blue); font-family: 'Orbitron', sans-serif; font-size: 14px; letter-spacing: 2px; margin-bottom: 25px; text-transform: uppercase; }
         .footer-info-item { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 18px; color: #ffffff; font-size: 13px; }
         .footer-icon { width: 18px; height: 18px; color: var(--neon-blue); stroke: var(--neon-blue); }
-        .footer-copyright { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #555; font-size: 11px; letter-spacing: 0.5px; }
+        .footer-copyright { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--card-border); color: #555; font-size: 11px; letter-spacing: 0.5px; }
         .footer-copyright b { color: var(--neon-blue); }
 
         #exit-modal {
@@ -232,7 +520,7 @@
             justify-content: center; align-items: center; padding: 20px;
         }
         .exit-content {
-            background: #0a0a0f; border: 1px solid var(--neon-blue); border-radius: 20px;
+            background: #0B132B; border: 1px solid var(--neon-blue); border-radius: 20px;
             max-width: 340px; width: 100%; padding: 30px; text-align: center;
         }
         .exit-content b { color: var(--neon-blue); }
@@ -242,7 +530,11 @@
 <body>
 <div class="container">
     <header class="header">
-        <h1>IRECARGA.VE</h1>
+        <div class="header-logo-container">
+            <img src="https://vlrryjmiyohkvupkofkz.supabase.co/storage/v1/object/public/Logo/Adobe%20Express%20-%20file.png" alt="Logo" class="header-logo">
+            <!-- Título estilizado estilo PinXtore con extensión de acento de color -->
+            <h1>IRECARGA<span style="color: var(--neon-blue);">.VE</span></h1>
+        </div>
         <div class="header-buttons">
             <a href="https://whatsapp.com/channel/0029Vb7XSZAElagl6DuEoH1u" target="_blank" class="support-btn-header channel-btn">
                 <svg class="channel-icon-mini" viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
@@ -252,12 +544,22 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" class="wa-icon-mini">
                 Ayuda
             </a>
+            <div class="support-btn-header resenas-btn" onclick="abrirResenas()">
+                ★ Reseñas
+            </div>
         </div>
     </header>
 
     <div class="status-bar">
         <div style="width:6px; height:6px; background:var(--accent-green); border-radius:50%; animation: pulse 2s infinite ease-in-out;"></div>
         <span>ESTADO: ONLINE | SISTEMA: ACTIVO</span>
+    </div>
+
+    <div class="section" id="resenas-section" onclick="abrirResenas()" style="cursor:pointer;">
+        <div class="step-header" style="justify-content:space-between; margin-bottom:0;">
+            <span style="display:flex; align-items:center; gap:8px;"><div class="step-num">★</div> OPINIONES DE CLIENTES</span>
+            <span id="resenas-promedio" class="resenas-promedio">-- ★</span>
+        </div>
     </div>
 
     <div class="section">
@@ -278,69 +580,157 @@
     </div>
 
     <div class="section">
-        <div class="step-header"><div class="step-num">3</div> DATOS DE PAGO</div>
-        <div class="pago-datos-container">
-            <div class="pago-row">
-                <div class="pago-left">
-                    <svg class="pago-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3l9 7v2H3v-2l9-7z"></path></svg>
-                    <span>BANESCO (0134)</span>
-                </div>
-                <button class="pago-btn-copiar" onclick="copyText(this, '013404248018068')">Copiar</button>
-            </div>
-            <div class="pago-row">
-                <div class="pago-left">
-                    <svg class="pago-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    <span>30870489</span>
-                </div>
-                <button class="pago-btn-copiar" onclick="copyText(this, '30870489')">Copiar</button>
-            </div>
-            <div class="pago-row">
-                <div class="pago-left">
-                    <svg class="pago-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    <span>04248018068</span>
-                </div>
-                <button class="pago-btn-copiar" onclick="copyText(this, '04248018068')">Copiar</button>
-            </div>
-            <button class="pago-btn-todos" onclick="copiarTodosDatos(this)">COPIAR TODO</button>
+        <div class="step-header"><div class="step-num">3</div> MÉTODO DE PAGO</div>
+        <div class="metodo-pago-card active" id="metodo-pago-movil" onclick="seleccionarMetodoPago('pago_movil')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--neon-blue);"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+            <span>PAGO MÓVIL</span>
+        </div>
+        <div class="metodo-pago-card" id="metodo-binance" onclick="seleccionarMetodoPago('binance')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:#F0B90B;"><path d="M12 2l3.09 3.09-3.09 3.09-3.09-3.09L12 2zm-6.91 6.91L8.18 12l-3.09 3.09L2 12l3.09-3.09zM12 8.18L15.09 12 12 15.09 8.91 12 12 8.18zm6.91-2.18L22 12l-3.09 3.09L15.82 12l3.09-3.09zM12 18.82l3.09 3.09L12 25l-3.09-3.09L12 18.82z"/></svg>
+            <span>BINANCE / USDT</span>
         </div>
     </div>
 
     <div class="section">
-        <div class="step-header" style="display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <div class="step-num">4</div> VERIFICAR
+        <div class="step-header"><div class="step-num">4</div> TUS DATOS</div>
+        <input type="email" id="email_cliente" placeholder="Correo de contacto..." style="margin-bottom:6px;">
+        <div class="phone-row">
+            <div class="phone-code" id="phone-code-btn" onclick="toggleCountryDropdown()">
+                <span id="phone-flag">🇻🇪</span> <span id="phone-dial">+58</span> <span class="arrow">▼</span>
             </div>
-            <div id="btn-ayuda" style="width: 20px; height: 20px; border: 1px solid var(--neon-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--neon-blue); cursor: help; background: rgba(0, 210, 255, 0.1);">?</div>
+            <div class="country-dropdown" id="country-dropdown"></div>
+            <input type="text" id="telefono_cliente" placeholder="Número de teléfono (WhatsApp)...">
         </div>
-
-        <div id="info-ayuda" class="help-modal-box">
-            <div style="color: var(--neon-blue); font-weight: bold; margin-bottom: 8px; font-family: 'Orbitron'; letter-spacing: 1px;">CÓMO SUBIR TU CAPTURE</div>
-            <ul>
-                <li>Asegúrate de que la <b>Referencia</b> se vea clara.</li>
-                <li>Recorta los bordes vacios del comprobante.</li>
-                <li>Si la imagen es borrosa, el escáner no podrá leerla.</li>
-            </ul>
-        </div>
-
-        <input type="email" id="email_cliente" placeholder="Tu correo..." style="margin-bottom:6px;">
-        
-        <div class="file-box">
-            <input type="file" id="comprobante" accept="image/*">
-            <div class="file-custom" id="file-label">⚡ SELECCIONAR COMPROBANTE</div>
-        </div>
-
-        <div class="scan-container" id="scan-box">
-            <div class="laser" id="laser-bar"></div>
-            <img id="preview-img" src="" alt="Scan">
-        </div>
-
-        <input type="text" id="referencia" placeholder="Número de Referencia..." style="margin-bottom:6px;">
-        <button class="btn-confirm" onclick="enviarFormulario()">VERIFICAR Y RECARGAR</button>
-        <div id="loader">PROCESANDO SOLICITUD...</div>
+        <label class="check-row">
+            <input type="checkbox" id="guardar_datos" checked>
+            Guardar datos para futuras compras
+        </label>
+        <button class="btn-confirm" id="btn-comprar" onclick="iniciarCompra()">COMPRAR — 0.00 Bs</button>
     </div>
 </div>
 
 <canvas id="preprocess-canvas" style="display:none;"></canvas>
+
+<div id="warning-overlay">
+    <div class="warning-box">
+        <div class="warning-head">⚠️ ¡ATENCIÓN: LEE ESTO ANTES DE PAGAR! ⚠️</div>
+        <div class="warning-body">
+            <div class="warning-item"><span class="icon">🏦</span><span><b>REALIZAR EL PAGO</b> únicamente a los <b>DATOS BANCARIOS</b> indicados aquí en la web.</span></div>
+            <div class="warning-item"><span class="icon">💰</span><span><b>COLOCAR EL MONTO CORRECTO</b> que el sistema te indica aquí en la web.</span></div>
+            <div class="warning-item"><span class="icon">⚡</span><span><b>COLOCAR EL NÚMERO DE REFERENCIA</b> correcto para que tu <b>RECARGA SEA AUTOMÁTICA</b>.</span></div>
+            <div class="warning-footer">🚀 ¡Si sigues estos pasos, tu recarga llega al instante! 🚀</div>
+            <button class="btn-ok-entiendo" onclick="cerrarAdvertencia()">OK, ENTIENDO 🎮</button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmacion-overlay">
+    <div class="container" style="padding:0;">
+        <div class="confirm-back" onclick="cerrarConfirmacion()">← Volver a la tienda</div>
+
+        <div class="section">
+            <div class="confirm-total-row">
+                <span>Total a pagar</span>
+                <span id="confirm-total">0.00 Bs</span>
+            </div>
+
+            <div class="confirm-section-title">Confirmar pago</div>
+
+            <!-- Datos de pago: Pago Móvil -->
+            <div id="datos-pago-movil">
+                <div class="pago-datos-container">
+                    <div class="pago-row">
+                        <div class="pago-left">
+                            <svg class="pago-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3l9 7v2H3v-2l9-7z"></path></svg>
+                            <span>BANESCO (0134)</span>
+                        </div>
+                        <button class="pago-btn-copiar" onclick="copyText(this, '013404248018068')">Copiar</button>
+                    </div>
+                    <div class="pago-row">
+                        <div class="pago-left">
+                            <svg class="pago-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>30870489</span>
+                        </div>
+                        <button class="pago-btn-copiar" onclick="copyText(this, '30870489')">Copiar</button>
+                    </div>
+                    <div class="pago-row">
+                        <div class="pago-left">
+                            <svg class="pago-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span>04248018068</span>
+                        </div>
+                        <button class="pago-btn-copiar" onclick="copyText(this, '04248018068')">Copiar</button>
+                    </div>
+                    <button class="pago-btn-todos" onclick="copiarTodosDatos(this)">COPIAR TODO</button>
+                </div>
+            </div>
+
+            <!-- Datos de pago: Binance -->
+            <div id="datos-pago-binance" style="display:none;">
+                <div class="binance-box">
+                    <h3>Verificación Automática Binance</h3>
+                    <div class="binance-warn">⚠️ IMPORTANTE</div>
+                    <p style="font-size:11px; color:var(--text-muted); margin-top:0;">Al realizar el pago en Binance, escribe este código en el campo "Nota del beneficiario" (memo/note)</p>
+                    <div class="binance-label">Dirección Binance Pay</div>
+                    <div class="binance-value" id="binance-payid">390154147</div>
+                    <button class="pago-btn-todos" style="margin-top:0; margin-bottom:10px;" onclick="copyText(this, '390154147')">Copiar</button>
+                    <div class="binance-code" id="binance-codigo">------</div>
+                    <button class="pago-btn-todos" style="margin-top:0;" onclick="copyText(this, document.getElementById('binance-codigo').innerText)">Copiar</button>
+                    <p class="binance-note">Sin este código en la nota, tu pago <b>NO</b> podrá ser verificado automáticamente.<br><br>Una vez realizado el pago, presiona "Confirmar Orden" y tu recarga será procesada automáticamente al verificar el pago.</p>
+                </div>
+            </div>
+
+            <div id="extra-verificacion-movil">
+                <div style="margin-top:16px;">
+                    <div class="confirm-section-title" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                        Captura del comprobante <span class="required-badge">REQUERIDO</span>
+                    </div>
+                    <div class="file-box">
+                        <input type="file" id="comprobante" accept="image/*">
+                        <div class="file-custom" id="file-label">⚡ SELECCIONAR IMAGEN</div>
+                    </div>
+                    <div class="scan-container" id="scan-box">
+                        <div class="laser" id="laser-bar"></div>
+                        <img id="preview-img" src="" alt="Scan">
+                    </div>
+                </div>
+
+                <div class="ref-extraida" id="ref-extraida-box" style="display:none;">
+                    <div class="label">Referencia extraída del comprobante</div>
+                    <div class="valor" id="ref-extraida-valor">--</div>
+                    <div class="nota" id="ref-extraida-nota">Referencia encontrada en el campo 'Operación'.</div>
+                </div>
+
+                <div class="fraude-warn">⚠️ Subir comprobantes falsos o manipulados constituye fraude electrónico y será penalizado conforme a la ley. Nos reservamos el derecho de reportar ante las autoridades.</div>
+
+                <div class="countdown-box">
+                    <div class="label">Tiempo restante para completar el pago</div>
+                    <div class="time" id="countdown-timer">30:00</div>
+                </div>
+
+                <div class="confirm-section-title" style="margin-bottom:6px;">Coloca tu referencia aquí</div>
+                <input type="text" id="referencia" placeholder="Número de Referencia..." style="margin-bottom:10px;">
+            </div>
+
+            <button class="btn-confirm" onclick="confirmarOrden()" id="btn-confirmar-orden">🛡️ CONFIRMAR ORDEN — <span id="confirm-btn-total">0.00 Bs</span></button>
+            <div id="loader">PROCESANDO SOLICITUD...</div>
+        </div>
+    </div>
+</div>
+
+<div id="resenas-overlay">
+    <div class="container" style="padding:0;">
+        <div class="confirm-back" onclick="cerrarResenas()">← Volver a la tienda</div>
+        <div class="section">
+            <div class="step-header" style="justify-content:space-between;">
+                <span>OPINIONES DE CLIENTES</span>
+                <span id="resenas-promedio-full" class="resenas-promedio">-- ★</span>
+            </div>
+            <div id="resenas-lista-full" class="resenas-lista-full">
+                <div class="loading-text">Cargando reseñas...</div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <footer class="footer-section">
     <div class="footer-title">CONTACTO Y SOPORTE</div>
@@ -363,39 +753,213 @@
     <div class="exit-content">
         <h2 class="exit-title">¡ESTADO: PROTEGIDO!</h2>
         <p style="font-size: 13px; color: #ccc;">Recarga de <b>💎 <span id="modal-diamonds">--</span></b> enviada.<br>Lista en 5-10 min.</p>
+
+        <div class="rating-box" id="rating-box">
+            <p>¿Cómo calificarías tu experiencia?</p>
+            <div class="star-picker" id="star-picker">
+                <span data-val="1">★</span><span data-val="2">★</span><span data-val="3">★</span><span data-val="4">★</span><span data-val="5">★</span>
+            </div>
+            <textarea id="resena-comentario" rows="2" placeholder="Cuéntanos qué te pareció (opcional)"></textarea>
+            <button class="btn-enviar-resena" onclick="enviarResena()">Enviar reseña</button>
+        </div>
+        <div class="resena-gracias" id="resena-gracias" style="display:none;">✅ ¡Gracias por tu opinión!</div>
+
         <button class="btn-confirm" onclick="closeExitModal()">FINALIZAR MI CARGA</button>
     </div>
 </div>
 
 <script>
-    // Función de ayuda integrada
-    document.getElementById('btn-ayuda').addEventListener('click', function() {
-        const info = document.getElementById('info-ayuda');
-        info.style.display = (info.style.display === 'none' || info.style.display === '') ? 'block' : 'none';
-    });
-
     const SUPABASE_URL = "https://vlrryjmiyohkvupkofkz.supabase.co";
     const SUPABASE_KEY = "sb_publishable_IGiK6-fjl3Xeh3Yr93Z9LA_JGN281YQ";
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     let selectedPackValue = "";
-    let tesseractWorker = null;
+    let selectedPackPrecio = 0;
 
-    async function initOcrWorker() {
+    // --- TASA DE CAMBIO (Bs -> $) ---
+    // Fuente: tasa paralelo/mercado vía API pública gratuita (dolarapi.com), sin API key.
+    // Se usa para calcular el monto equivalente en $ cuando el cliente paga con Binance/USDT.
+    // Se cachea en localStorage por 6 horas para no golpear la API en cada visita.
+    let tasaCambio = null;
+
+    async function obtenerTasaCambio() {
+        const CACHE_KEY = 'irecarga_tasa_paralelo';
+        const CACHE_MS = 6 * 60 * 60 * 1000; // 6 horas
         try {
-            tesseractWorker = Tesseract.createWorker({ cacheMethod: 'readOnly' });
-            await tesseractWorker.load();
-            await tesseractWorker.loadLanguage('eng');
-            await tesseractWorker.initialize('eng');
-            await tesseractWorker.setParameters({
-                tessedit_char_whitelist: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:._-,/ ',
-                tessedit_pageseg_mode: '11'
-            });
-            console.log("Motor OCR Multibanco Avanzado Activado");
-        } catch(e) { console.error("Error inicializando OCR", e); }
-    }
-    initOcrWorker();
+            const cacheado = localStorage.getItem(CACHE_KEY);
+            if (cacheado) {
+                const { tasa, ts } = JSON.parse(cacheado);
+                if (Date.now() - ts < CACHE_MS && tasa > 0) {
+                    tasaCambio = tasa;
+                    return;
+                }
+            }
+        } catch (e) { /* localStorage no disponible, seguimos con fetch */ }
 
-    document.getElementById('comprobante').addEventListener('change', function(e) {
+        try {
+            const res = await fetch('https://ve.dolarapi.com/v1/dolares/paralelo');
+            if (!res.ok) throw new Error('No se pudo obtener la tasa');
+            const data = await res.json();
+            tasaCambio = data.promedio;
+            try {
+                localStorage.setItem(CACHE_KEY, JSON.stringify({ tasa: tasaCambio, ts: Date.now() }));
+            } catch (e) { /* si falla el cache no es grave */ }
+        } catch (err) {
+            console.error('Error obteniendo tasa paralelo:', err);
+            tasaCambio = null;
+        }
+    }
+
+    function formatearBs(precio) {
+        return `${Number(precio).toFixed(2)} Bs`;
+    }
+    function formatearUSD(precio) {
+        if (!tasaCambio) return null;
+        return `$${(Number(precio) / tasaCambio).toFixed(2)}`;
+    }
+
+    function actualizarTotal() {
+        renderPreciosSegunMetodo();
+        actualizarBotonComprar();
+    }
+
+    // Pinta el precio de cada tarjeta y el total: en Bs si el método es Pago Móvil,
+    // en $ si el método es Binance (usando la tasa paralelo ya cargada).
+    function renderPreciosSegunMetodo() {
+        const usarUSD = metodoPagoSeleccionado === 'binance' && tasaCambio;
+        document.querySelectorAll('.diamond-card').forEach(card => {
+            const precio = parseFloat(card.dataset.precio);
+            const priceEl = card.querySelector('.card-price');
+            if (!priceEl || isNaN(precio)) return;
+            priceEl.innerText = usarUSD ? formatearUSD(precio) : formatearBs(precio);
+        });
+        const totalEl = document.getElementById('payment-price');
+        if (totalEl) totalEl.innerText = usarUSD ? formatearUSD(selectedPackPrecio) : formatearBs(selectedPackPrecio);
+    }
+
+    // --- MÉTODO DE PAGO ---
+    let metodoPagoSeleccionado = 'pago_movil';
+
+    function seleccionarMetodoPago(metodo) {
+        metodoPagoSeleccionado = metodo;
+        document.getElementById('metodo-pago-movil').classList.toggle('active', metodo === 'pago_movil');
+        document.getElementById('metodo-binance').classList.toggle('active', metodo === 'binance');
+        renderPreciosSegunMetodo();
+        actualizarBotonComprar();
+    }
+
+    function actualizarBotonComprar() {
+        const btn = document.getElementById('btn-comprar');
+        if (!btn) return;
+        if (metodoPagoSeleccionado === 'binance' && tasaCambio) {
+            const usd = formatearUSD(selectedPackPrecio);
+            btn.innerText = `COMPRAR — ${usd || formatearBs(selectedPackPrecio)}`;
+        } else {
+            btn.innerText = `COMPRAR — ${formatearBs(selectedPackPrecio)}`;
+        }
+    }
+
+    obtenerTasaCambio().then(() => { renderPreciosSegunMetodo(); actualizarBotonComprar(); });
+
+    // ⚠️ IMPORTANTE - LEE ESTO:
+    // Esta clave es SECRETA y NO debería vivir en el navegador. Cualquiera que
+    // vea el código fuente de tu página puede copiarla y usarla a tu costa.
+    // Por ahora la dejamos aquí para que el escáner funcione HOY, pero debes
+    // 1) revocar/regenerar esta clave en console.groq.com apenas puedas, y
+    // 2) mover esta llamada a una Supabase Edge Function (backend) que
+    //    guarde la clave de forma segura. Te explico cómo en el chat.
+    const GROQ_API_KEY = "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";
+
+    // Convierte el archivo seleccionado a Base64 para enviarlo a la API de Groq
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                const base64String = reader.result.split(',')[1];
+                resolve(base64String);
+            };
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    // NUEVO: comprime/redimensiona la imagen antes de enviarla.
+    // Groq limita las imágenes en base64 a 4MB por solicitud; una foto de
+    // celular sin comprimir puede superar ese límite y hacer fallar el
+    // escaneo. Esto también acelera la respuesta de la IA.
+    function comprimirImagen(file, maxAncho = 1280, calidad = 0.85) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            const url = URL.createObjectURL(file);
+            img.onload = () => {
+                const canvas = document.getElementById('preprocess-canvas');
+                let { width, height } = img;
+                if (width > maxAncho) {
+                    height = Math.round(height * (maxAncho / width));
+                    width = maxAncho;
+                }
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                URL.revokeObjectURL(url);
+                canvas.toBlob((blob) => {
+                    if (!blob) return reject(new Error('No se pudo procesar la imagen'));
+                    resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+                }, 'image/jpeg', calidad);
+            };
+            img.onerror = reject;
+            img.src = url;
+        });
+    }
+
+    // Lógica de escaneo con IA usando Groq (Llama 4 Scout - modelo de visión vigente)
+    async function scanWithGroq(base64Data, mimeType) {
+        const url = "https://api.groq.com/openai/v1/chat/completions";
+
+        const payload = {
+            // Modelo actualizado: llama-3.2-11b-vision-preview fue DESCONTINUADO por Groq.
+            // El modelo de visión soportado actualmente es llama-4-scout.
+            model: "meta-llama/llama-4-scout-17b-16e-instruct",
+            temperature: 0,
+            max_completion_tokens: 50,
+            messages: [{
+                role: "user",
+                content: [
+                    { 
+                        type: "text", 
+                        text: "Analiza esta imagen de un comprobante de pago bancario de Venezuela (Pago Móvil o Transferencia). Extrae ÚNICAMENTE el número de referencia real de la transacción. Ignora montos (Bs), números de cuenta, números de teléfono, identificaciones o fechas de operación. Devuelve exclusivamente el número de referencia en dígitos, sin textos adicionales, sin espacios, sin puntos y sin explicaciones. Si no es posible encontrar una referencia válida bajo ninguna circunstancia, responde únicamente con la palabra: ERROR" 
+                    },
+                    {
+                        type: "image_url",
+                        image_url: {
+                            url: `data:${mimeType};base64,${base64Data}`
+                        }
+                    }
+                ]
+            }]
+        };
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${GROQ_API_KEY}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const errBody = await response.text().catch(() => "");
+            console.error("Groq error:", response.status, errBody);
+            throw new Error("Fallo en la comunicación con la API de Groq");
+        }
+
+        const result = await response.json();
+        const extractedText = result.choices[0].message.content.trim();
+        return extractedText;
+    }
+
+    document.getElementById('comprobante').addEventListener('change', async function(e) {
         const file = e.target.files[0];
         const refField = document.getElementById('referencia');
         const loader = document.getElementById('loader');
@@ -407,133 +971,142 @@
         if (!file) return;
 
         scanBox.style.display = "block";
-        laserBar.style.display = "block"; 
         previewImg.src = URL.createObjectURL(file);
-        
-        fileLabel.innerText = "⚡ ANALIZANDO...";
+
+        // Con Binance la referencia ya es el código de verificación generado (no hay nada que escanear).
+        // Solo pedimos la captura como evidencia del pago.
+        if (metodoPagoSeleccionado === 'binance') {
+            laserBar.style.display = 'none';
+            fileLabel.innerText = "✅ CAPTURA CARGADA";
+            fileLabel.style.color = "var(--accent-green)";
+            fileLabel.style.borderColor = "var(--accent-green)";
+            return;
+        }
+
+        laserBar.style.display = "block";
+        fileLabel.innerText = "⚡ ESCANEANDO CON IA...";
         loader.style.display = "block";
-        loader.innerText = "⚡ ESCANEANDO COMPROBANTE...";
+        loader.innerText = "⚡ LA IA ESTÁ EXTRAYENDO LOS DATOS...";
 
         refField.value = "";
         refField.readOnly = false;
 
-        const img = new Image();
-        img.src = URL.createObjectURL(file);
-        img.onload = async function() {
-            const canvas = document.getElementById('preprocess-canvas');
-            const ctx = canvas.getContext('2d');
-            
-            const targetWidth = 1200; 
-            const scale = targetWidth / img.width;
-            canvas.width = targetWidth;
-            canvas.height = img.height * scale;
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        try {
+            // Comprimimos la imagen antes de enviarla (evita el límite de 4MB de Groq)
+            const imagenLista = await comprimirImagen(file);
+            const base64Data = await fileToBase64(imagenLista);
+            const extractedRef = await scanWithGroq(base64Data, imagenLista.type);
 
-            try {
-                let text = "";
-                if(tesseractWorker) {
-                    const { data } = await tesseractWorker.recognize(canvas);
-                    text = data.text;
-                } else {
-                    const { data } = await Tesseract.recognize(canvas, 'eng');
-                    text = data.text;
-                }
-
-                const lines = text.split('\n').map(l => l.trim().toLowerCase());
-                let winningNumber = null;
-
-                const targetKeywords = ['operacion', 'operación', 'operaci', 'referencia', 'referen', 'nro', 'nro.', 'número', 'numero', 'transaccion', 'transacción', 'ref', 'aprobacion', 'aprobación', 'comprobante', 'clabe', 'pago'];
-                const exclusionKeywords = ['fecha', 'hora', 'monto', 'total', 'bs', 'bs.', 'bolivares', 'bolívares', 'identificacion', 'identificación', 'origen', 'destino', 'cuenta', 'v-', 'j-', 'c.i', 'emisor', 'tipo', 'celular', 'telefono', 'teléfono'];
-
-                for (let i = 0; i < lines.length; i++) {
-                    let line = lines[i];
-
-                    if (targetKeywords.some(kw => line.includes(kw))) {
-                        let foundKw = targetKeywords.find(kw => line.includes(kw));
-                        let idx = line.indexOf(foundKw);
-                        let textAfter = line.substring(idx + foundKw.length);
-
-                        let digitsAfter = textAfter.replace(/[^0-9]/g, '');
-                        if (digitsAfter && isValidRef(digitsAfter)) {
-                            winningNumber = digitsAfter;
-                            break;
-                        }
-
-                        let digitsWhole = line.replace(/[^0-9]/g, '');
-                        if (digitsWhole && isValidRef(digitsWhole)) {
-                            winningNumber = digitsWhole;
-                            break;
-                        }
-
-                        if (i + 1 < lines.length) {
-                            let nextLine = lines[i + 1];
-                            let digitsNext = nextLine.replace(/[^0-9]/g, '');
-                            if (digitsNext && isValidRef(digitsNext)) {
-                                winningNumber = digitsNext;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (!winningNumber) {
-                    for (let i = 0; i < lines.length; i++) {
-                        let line = lines[i];
-                        if (exclusionKeywords.some(kw => line.includes(kw))) continue;
-                        
-                        let digits = line.replace(/[^0-9]/g, '');
-                        if (digits && isValidRef(digits)) {
-                            winningNumber = digits;
-                            break;
-                        }
-                    }
-                }
-
-                function isValidRef(numStr) {
-                    if (!numStr) return false;
-                    if (numStr.length < 4 || numStr.length > 20) return false;
-                    if (/^0+$/.test(numStr)) return false; 
-                    
-                    if (/^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[0-2])(202\d)/.test(numStr)) return false; 
-                    if (/^(202\d)(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])/.test(numStr)) return false;
-                    
-                    if ((numStr.length === 10 || numStr.length === 11) && /^(0412|0414|0424|0416|0426|412|414|424|416|426)/.test(numStr)) return false;
-                    if (numStr.length === 20 && /^(0102|0134|0105|0108|0114|0163|0115)/.test(numStr)) return false;
-                    if ((numStr.endsWith('2026') || numStr.endsWith('2025') || numStr.startsWith('2026') || numStr.startsWith('2025')) && numStr.length <= 8) return false;
-                    if (numStr === "04248018068" || numStr === "30870489") return false;
-                    
-                    return true; 
-                }
-
-                if (winningNumber) {
-                    if (winningNumber.length === 13 && winningNumber.endsWith('0')) {
-                        winningNumber = winningNumber.slice(0, 12);
-                    }
-
-                    refField.value = winningNumber; 
-                    refField.readOnly = true; 
-                    refField.style.background = "rgba(0, 255, 136, 0.15)";
-                    refField.style.borderColor = "var(--accent-green)";
-                    
-                    fileLabel.innerText = "✅ DETECTADO CON ÉXITO";
-                    fileLabel.style.color = "var(--accent-green)";
-                    fileLabel.style.borderColor = "var(--accent-green)";
-                } else {
-                    throw new Error("No se detectó referencia");
-                }
-
-            } catch (err) {
-                fileLabel.innerText = "⚠️ INGRESE REF. MANUAL";
-                fileLabel.style.color = "#FFB800";
-                fileLabel.style.borderColor = "#FFB800";
-                refField.readOnly = false;
-                refField.placeholder = "Número de Referencia...";
-            } finally {
-                loader.style.display = "none";
-                laserBar.style.display = 'none';
+            // Validación: solo dígitos, entre 6 y 20 caracteres (rango típico de referencias bancarias VE)
+            const soloDigitos = /^[0-9]{6,20}$/;
+            if (extractedRef === "ERROR" || !extractedRef || !soloDigitos.test(extractedRef)) {
+                throw new Error("No se detectó referencia válida");
             }
-        };
+
+            refField.value = extractedRef; 
+            refField.readOnly = true; 
+            refField.style.background = "rgba(16, 185, 129, 0.15)";
+            refField.style.borderColor = "var(--accent-green)";
+            
+            fileLabel.innerText = "✅ DETECTADO CON ÉXITO";
+            fileLabel.style.color = "var(--accent-green)";
+            fileLabel.style.borderColor = "var(--accent-green)";
+
+            document.getElementById('ref-extraida-box').style.display = 'block';
+            document.getElementById('ref-extraida-valor').innerText = extractedRef;
+
+        } catch (err) {
+            console.error("Error al escanear:", err);
+            fileLabel.innerText = "⚠️ INGRESE REF. MANUAL";
+            fileLabel.style.color = "#FFB800";
+            fileLabel.style.borderColor = "#FFB800";
+            refField.readOnly = false;
+            refField.placeholder = "Número de Referencia...";
+            document.getElementById('ref-extraida-box').style.display = 'none';
+        } finally {
+            loader.style.display = "none";
+            laserBar.style.display = 'none';
+        }
     });
+
+    // Función para obtener la imagen de Garena desde tu propio Supabase Storage (Logo)
+    function obtenerImagenPaquete(nombre) {
+        const n = nombre.toLowerCase().trim();
+        const baseStorage = "https://vlrryjmiyohkvupkofkz.supabase.co/storage/v1/object/public/Logo";
+        
+        // Membresías y Pase Booyah
+        if (n.includes('booyah')) {
+            return `${baseStorage}/booyah.png`; 
+        }
+        if (n.includes('mensual')) {
+            return `${baseStorage}/mensual.png`; 
+        }
+        if (n.includes('semanal')) {
+            return `${baseStorage}/semanal.png`; 
+        }
+        
+        // Paquetes estándar de Diamantes
+        const num = parseInt(n.replace(/[^0-9]/g, ''), 10);
+        if (!num) return `${baseStorage}/diamond-1.png`;
+        
+        // Mapeo 100% individual para los 11 paquetes sin repetir imágenes
+        if (num <= 110) return `${baseStorage}/diamond-1.png`;   // 100+10
+        if (num <= 220) return `${baseStorage}/diamond-2.png`;   // 220
+        if (num <= 341) return `${baseStorage}/diamond-3.png`;   // 310+31
+        if (num <= 572) return `${baseStorage}/diamond-4.png`;   // 520+52
+        if (num <= 682) return `${baseStorage}/diamond-5.png`;   // 682
+        if (num <= 1166) return `${baseStorage}/diamond-6.png`;  // 1166
+        if (num <= 2398) return `${baseStorage}/diamond-7.png`;  // 2398
+        if (num <= 3564) return `${baseStorage}/diamond-8.png`;  // 3564
+        if (num <= 4796) return `${baseStorage}/diamond-9.png`;  // 4796
+        if (num <= 6160) return `${baseStorage}/diamond-10.png`; // 6160
+        return `${baseStorage}/diamond-11.png`;                  // 12320
+    }
+
+    // Procesa el nombre del producto para formatearlo como en PinXtore (Ej: 110 -> 100+10 DIAMANTES)
+    function formatearNombreTarjeta(nombre) {
+        const n = nombre.trim();
+        if (n === "110") return { principal: "100+10", sub: "DIAMANTES" };
+        if (n === "220") return { principal: "220", sub: "DIAMANTES" };
+        if (n === "341") return { principal: "310+31", sub: "DIAMANTES" };
+        if (n === "572") return { principal: "520+52", sub: "DIAMANTES" };
+        if (n === "682") return { principal: "682", sub: "DIAMANTES" };
+        if (n === "1166") return { principal: "1166", sub: "DIAMANTES" };
+        if (n === "2398") return { principal: "2398", sub: "DIAMANTES" };
+        if (n === "3564") return { principal: "3564", sub: "DIAMANTES" };
+        if (n === "4796") return { principal: "4796", sub: "DIAMANTES" };
+        if (n === "6160") return { principal: "6160", sub: "DIAMANTES" };
+        if (n === "12320") return { principal: "12320", sub: "DIAMANTES" };
+        
+        if (n.toLowerCase().includes('mensual')) return { principal: "MENSUAL", sub: "MEMBRESÍA" };
+        if (n.toLowerCase().includes('semanal')) return { principal: "SEMANAL", sub: "MEMBRESÍA" };
+        if (n.toLowerCase().includes('booyah')) return { principal: "BOOYAH", sub: "PASE" };
+        
+        return { principal: n, sub: "DIAMANTES" };
+    }
+
+    // Devuelve el concepto oficial correspondiente para cada paquete (Ej: 100 diamantes + 10 bono)
+    function obtenerConceptoPaquete(nombre) {
+        const n = nombre.toLowerCase().trim();
+        if (n === "110") return "100 diamantes + 10 bono";
+        if (n === "220") return "200 diamantes + 20 bono";
+        if (n === "310+31" || n === "341") return "310 diamantes + 31 bono";
+        if (n === "520+52" || n === "572") return "520 diamantes + 52 bono";
+        if (n === "682") return "620 diamantes + 62 bono";
+        if (n === "1100") return "1000 diamantes + 100 bono";
+        if (n === "1166") return "1060 diamantes + 106 bono";
+        if (n === "2398") return "2180 diamantes + 218 bono";
+        if (n === "3564") return "3240 diamantes + 324 bono";
+        if (n === "4796") return "4360 diamantes + 436 bono";
+        if (n === "6160") return "5600 diamantes + 560 bono";
+        if (n === "12320") return "11200 diamantes + 1120 bono";
+        
+        if (n.includes('mensual')) return "diamantes diario por 30 días";
+        if (n.includes('semanal')) return "diamantes diario por 7 días";
+        if (n.includes('booyah')) return "recompensas premium del pase";
+        
+        return "diamantes directos a tu id";
+    }
 
     async function cargarPrecios() {
         const { data, error } = await _supabase.from('productos_web').select('*').order('id', { ascending: true });
@@ -544,24 +1117,114 @@
         data.forEach((prod) => {
             const card = document.createElement('div');
             card.className = 'diamond-card';
+            card.dataset.precio = prod.precio;
             if (prod.nombre === "110") {
                 card.classList.add('active');
                 selectedPackValue = prod.nombre;
-                document.getElementById('payment-price').innerText = `${prod.precio} Bs`;
+                selectedPackPrecio = prod.precio;
             }
-            card.onclick = () => selectPack(card, `${prod.precio} Bs`, prod.nombre);
-            const prefijo = (prod.nombre.includes('P. Booyah') || prod.nombre.includes('M. Mensual')) ? "🔥" : "💎";
-            card.innerHTML = `<b>${prefijo} ${prod.nombre}</b> <span>${prod.precio} Bs</span>`;
+            card.onclick = () => selectPack(card, prod.precio, prod.nombre);
+            
+            const { principal, sub } = formatearNombreTarjeta(prod.nombre);
+            const imgUrl = obtenerImagenPaquete(prod.nombre);
+            const concepto = obtenerConceptoPaquete(prod.nombre);
+            
+            // Reemplazo completo de la tarjeta adaptado a la estética reducida de 3 columnas
+            card.innerHTML = `
+                <div class="card-header">
+                    <span class="card-brand-ff">FF LATAM</span>
+                    <span class="card-brand-web">IRECARGA</span>
+                </div>
+                <div class="card-title-container">
+                    <span class="card-qty">${principal}</span>
+                    <span class="card-sub">${sub}</span>
+                </div>
+                <img src="${imgUrl}" class="diamond-img" alt="Paquete">
+                <span class="card-concept">${concepto}</span>
+                <span class="card-price">${formatearBs(prod.precio)}</span>
+            `;
+            
             if (prod.nombre === 'M. Mensual') gridManual.appendChild(card); else gridAuto.appendChild(card);
         });
+        actualizarTotal();
     }
     cargarPrecios();
+    cargarResenas();
 
-    function selectPack(el, price, diamonds) {
+    // --- RESEÑAS ---
+    async function cargarResenas() {
+        const promedioEl = document.getElementById('resenas-promedio');
+        const promedioFullEl = document.getElementById('resenas-promedio-full');
+        const listaFull = document.getElementById('resenas-lista-full');
+
+        const { data, error } = await _supabase.from('resenas').select('*').order('creado_en', { ascending: false }).limit(50);
+
+        if (error) {
+            promedioEl.innerText = '-- ★';
+            listaFull.innerHTML = '<div class="loading-text">No se pudieron cargar las reseñas.</div>';
+            return;
+        }
+        if (!data || data.length === 0) {
+            promedioEl.innerText = '-- ★';
+            promedioFullEl.innerText = '-- ★';
+            listaFull.innerHTML = '<div class="loading-text">Sé el primero en dejar tu opinión ⭐</div>';
+            return;
+        }
+        const promedio = data.reduce((acc, r) => acc + r.estrellas, 0) / data.length;
+        promedioEl.innerText = `${promedio.toFixed(1)} ★`;
+        promedioFullEl.innerText = `${promedio.toFixed(1)} ★`;
+        listaFull.innerHTML = data.map(r => `
+            <div class="resena-card">
+                <div class="resena-estrellas">${'★'.repeat(r.estrellas)}${'☆'.repeat(5 - r.estrellas)}</div>
+                ${r.comentario ? `<div class="resena-texto">${r.comentario}</div>` : ''}
+                <div class="resena-alias">${r.alias}</div>
+            </div>`).join('');
+    }
+
+    function abrirResenas() {
+        document.getElementById('resenas-overlay').style.display = 'block';
+        window.scrollTo({ top: 0 });
+    }
+    function cerrarResenas() {
+        document.getElementById('resenas-overlay').style.display = 'none';
+    }
+
+    let estrellasSeleccionadas = 0;
+    document.querySelectorAll('#star-picker span').forEach(star => {
+        star.addEventListener('click', () => {
+            estrellasSeleccionadas = parseInt(star.dataset.val);
+            document.querySelectorAll('#star-picker span').forEach(s => {
+                s.classList.toggle('active', parseInt(s.dataset.val) <= estrellasSeleccionadas);
+            });
+        });
+    });
+
+    async function enviarResena() {
+        if (estrellasSeleccionadas === 0) {
+            alert('Selecciona al menos una estrella');
+            return;
+        }
+        const comentario = document.getElementById('resena-comentario').value.trim();
+        const idJugador = document.getElementById('player_id').value || '0000';
+        const alias = `ID ****${idJugador.slice(-4)}`;
+
+        try {
+            await _supabase.from('resenas').insert([{ alias, estrellas: estrellasSeleccionadas, comentario: comentario || null }]);
+            document.getElementById('rating-box').style.display = 'none';
+            document.getElementById('resena-gracias').style.display = 'block';
+            cargarResenas();
+        } catch (err) {
+            console.error(err);
+            alert('No se pudo enviar tu reseña, intenta de nuevo.');
+        }
+    }
+
+    function selectPack(el, precio, diamonds) {
         document.querySelectorAll('.diamond-card').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
-        document.getElementById('payment-price').innerText = price;
         selectedPackValue = diamonds;
+        selectedPackPrecio = precio;
+        actualizarTotal();
     }
 
     function copyText(btn, txt) { 
@@ -585,17 +1248,38 @@
     function closeExitModal() { 
         document.getElementById('exit-modal').style.display = 'none'; 
         document.getElementById('player_id').value = '';
-        document.getElementById('email_cliente').value = '';
         document.getElementById('referencia').value = '';
         document.getElementById('comprobante').value = '';
         document.getElementById('scan-box').style.display = 'none';
         document.getElementById('laser-bar').style.display = 'block';
+        document.getElementById('ref-extraida-box').style.display = 'none';
+
+        // Reset del widget de calificación para la próxima compra
+        estrellasSeleccionadas = 0;
+        document.querySelectorAll('#star-picker span').forEach(s => s.classList.remove('active'));
+        document.getElementById('resena-comentario').value = '';
+        document.getElementById('rating-box').style.display = 'block';
+        document.getElementById('resena-gracias').style.display = 'none';
+
+        // Si el cliente pidió guardar sus datos, no borramos email/teléfono para su próxima compra
+        try {
+            const guardado = JSON.parse(localStorage.getItem('irecarga_datos_cliente') || 'null');
+            if (!guardado) {
+                document.getElementById('email_cliente').value = '';
+                document.getElementById('telefono_cliente').value = '';
+            }
+        } catch (e) {
+            document.getElementById('email_cliente').value = '';
+            document.getElementById('telefono_cliente').value = '';
+        }
+
+        seleccionarMetodoPago('pago_movil');
 
         const refField = document.getElementById('referencia');
         refField.readOnly = false;
-        refField.style.background = "rgba(0, 0, 0, 0.4)";
-        refField.style.borderColor = "#222";
-        document.getElementById('file-label').innerText = "⚡ SELECCIONAR COMPROBANTE";
+        refField.style.background = "rgba(11, 19, 43, 0.6)";
+        refField.style.borderColor = "var(--card-border)";
+        document.getElementById('file-label').innerText = "⚡ SELECCIONAR IMAGEN";
         document.getElementById('file-label').style.color = "";
         document.getElementById('file-label').style.borderColor = "";
 
@@ -604,41 +1288,238 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    async function enviarFormulario() {
+    // --- SELECTOR DE PAÍS (TELÉFONO) ---
+    const listaPaises = [
+        { nombre: 'Venezuela', flag: '🇻🇪', dial: '+58' },
+        { nombre: 'Colombia', flag: '🇨🇴', dial: '+57' },
+        { nombre: 'México', flag: '🇲🇽', dial: '+52' },
+        { nombre: 'Perú', flag: '🇵🇪', dial: '+51' },
+        { nombre: 'Chile', flag: '🇨🇱', dial: '+56' },
+        { nombre: 'Argentina', flag: '🇦🇷', dial: '+54' },
+        { nombre: 'Ecuador', flag: '🇪🇨', dial: '+593' },
+        { nombre: 'Estados Unidos', flag: '🇺🇸', dial: '+1' },
+        { nombre: 'Brasil', flag: '🇧🇷', dial: '+55' },
+        { nombre: 'Bolivia', flag: '🇧🇴', dial: '+591' },
+        { nombre: 'Paraguay', flag: '🇵🇾', dial: '+595' },
+        { nombre: 'Uruguay', flag: '🇺🇾', dial: '+598' },
+        { nombre: 'Panamá', flag: '🇵🇦', dial: '+507' },
+        { nombre: 'España', flag: '🇪🇸', dial: '+34' },
+        { nombre: 'Rep. Dominicana', flag: '🇩🇴', dial: '+1809' }
+    ];
+
+    function renderCountryDropdown() {
+        const cont = document.getElementById('country-dropdown');
+        cont.innerHTML = listaPaises.map(p => `
+            <div class="country-item" onclick="seleccionarPais('${p.flag}', '${p.dial}')">
+                <span class="cname">${p.flag} ${p.nombre}</span>
+                <span class="ccode">${p.dial}</span>
+            </div>`).join('');
+    }
+    renderCountryDropdown();
+
+    function toggleCountryDropdown() {
+        document.getElementById('country-dropdown').classList.toggle('open');
+    }
+
+    function seleccionarPais(flag, dial) {
+        document.getElementById('phone-flag').innerText = flag;
+        document.getElementById('phone-dial').innerText = dial;
+        document.getElementById('country-dropdown').classList.remove('open');
+    }
+
+    function telefonoCompleto() {
+        const dial = document.getElementById('phone-dial').innerText;
+        const numero = document.getElementById('telefono_cliente').value.trim();
+        return `${dial} ${numero}`;
+    }
+
+    document.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('country-dropdown');
+        const btn = document.getElementById('phone-code-btn');
+        if (dropdown.classList.contains('open') && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+            dropdown.classList.remove('open');
+        }
+    });
+
+    // --- FLUJO DE COMPRA: método de pago -> datos -> advertencia -> confirmación ---
+
+    // Precarga datos guardados si el cliente marcó "guardar datos" en una compra anterior
+    (function precargarDatosGuardados() {
+        try {
+            const guardado = JSON.parse(localStorage.getItem('irecarga_datos_cliente') || 'null');
+            if (guardado) {
+                document.getElementById('email_cliente').value = guardado.email || '';
+                document.getElementById('telefono_cliente').value = guardado.telefono || '';
+                if (guardado.dial) document.getElementById('phone-dial').innerText = guardado.dial;
+                if (guardado.flag) document.getElementById('phone-flag').innerText = guardado.flag;
+            }
+        } catch (e) { /* no pasa nada si falla */ }
+    })();
+
+    function iniciarCompra() {
         const idField = document.getElementById('player_id');
         const mailField = document.getElementById('email_cliente');
+        const telField = document.getElementById('telefono_cliente');
+
+        if (!idField.value.trim()) return alert('Ingresa tu ID de Jugador');
+        if (!mailField.value.trim()) return alert('Ingresa tu correo de contacto');
+        if (!telField.value.trim()) return alert('Ingresa tu número de teléfono');
+
+        if (document.getElementById('guardar_datos').checked) {
+            try {
+                localStorage.setItem('irecarga_datos_cliente', JSON.stringify({
+                    email: mailField.value.trim(),
+                    telefono: telField.value.trim(),
+                    dial: document.getElementById('phone-dial').innerText,
+                    flag: document.getElementById('phone-flag').innerText
+                }));
+            } catch (e) { /* si falla el guardado no es grave */ }
+        }
+
+        document.getElementById('warning-overlay').style.display = 'flex';
+    }
+
+    function cerrarAdvertencia() {
+        document.getElementById('warning-overlay').style.display = 'none';
+        abrirConfirmacion();
+    }
+
+    let codigoVerificacionActual = null;
+    let countdownInterval = null;
+
+    function generarCodigoVerificacion() {
+        return String(Math.floor(100000 + Math.random() * 900000));
+    }
+
+    function abrirConfirmacion() {
+        // Reset de estado visual
+        document.getElementById('comprobante').value = '';
+        document.getElementById('scan-box').style.display = 'none';
+        document.getElementById('ref-extraida-box').style.display = 'none';
+        document.getElementById('file-label').innerText = '⚡ SELECCIONAR IMAGEN';
+        document.getElementById('file-label').style.color = '';
+        document.getElementById('file-label').style.borderColor = '';
+
+        const refField = document.getElementById('referencia');
+        refField.readOnly = false;
+        refField.style.background = '';
+        refField.style.borderColor = '';
+
+        const totalTexto = metodoPagoSeleccionado === 'binance' && tasaCambio
+            ? (formatearUSD(selectedPackPrecio) || formatearBs(selectedPackPrecio))
+            : formatearBs(selectedPackPrecio);
+        document.getElementById('confirm-total').innerText = totalTexto;
+
+        document.getElementById('datos-pago-movil').style.display = metodoPagoSeleccionado === 'binance' ? 'none' : 'block';
+        document.getElementById('datos-pago-binance').style.display = metodoPagoSeleccionado === 'binance' ? 'block' : 'none';
+        document.getElementById('extra-verificacion-movil').style.display = metodoPagoSeleccionado === 'binance' ? 'none' : 'block';
+
+        const btnOrden = document.getElementById('btn-confirmar-orden');
+        if (metodoPagoSeleccionado === 'binance') {
+            btnOrden.innerHTML = '🛡️ Confirmar Pago';
+        } else {
+            btnOrden.innerHTML = `🛡️ CONFIRMAR ORDEN — <span id="confirm-btn-total">${totalTexto}</span>`;
+        }
+
+        if (metodoPagoSeleccionado === 'binance') {
+            codigoVerificacionActual = generarCodigoVerificacion();
+            document.getElementById('binance-codigo').innerText = codigoVerificacionActual;
+            refField.value = codigoVerificacionActual;
+            refField.readOnly = true;
+            refField.style.background = 'rgba(16, 185, 129, 0.15)';
+            refField.style.borderColor = 'var(--accent-green)';
+        } else {
+            codigoVerificacionActual = null;
+            refField.value = '';
+        }
+
+        document.getElementById('confirmacion-overlay').style.display = 'block';
+        window.scrollTo({ top: 0 });
+        if (metodoPagoSeleccionado !== 'binance') {
+            iniciarCountdown();
+        } else if (countdownInterval) {
+            clearInterval(countdownInterval);
+        }
+    }
+
+    function cerrarConfirmacion() {
+        document.getElementById('confirmacion-overlay').style.display = 'none';
+        if (countdownInterval) clearInterval(countdownInterval);
+    }
+
+    function iniciarCountdown() {
+        if (countdownInterval) clearInterval(countdownInterval);
+        let segundosRestantes = 30 * 60; // 30 minutos para completar el pago
+        const el = document.getElementById('countdown-timer');
+
+        function pintar() {
+            const min = String(Math.floor(segundosRestantes / 60)).padStart(2, '0');
+            const seg = String(segundosRestantes % 60).padStart(2, '0');
+            el.innerText = `${min}:${seg}`;
+        }
+        pintar();
+
+        countdownInterval = setInterval(() => {
+            segundosRestantes--;
+            pintar();
+            if (segundosRestantes <= 0) {
+                clearInterval(countdownInterval);
+                alert('El tiempo para completar el pago expiró. Por favor intenta de nuevo.');
+                cerrarConfirmacion();
+            }
+        }, 1000);
+    }
+
+    async function confirmarOrden() {
+        const idField = document.getElementById('player_id');
+        const mailField = document.getElementById('email_cliente');
+        const telField = document.getElementById('telefono_cliente');
         const refField = document.getElementById('referencia');
         const fileField = document.getElementById('comprobante');
         const loader = document.getElementById('loader');
-        const precioActual = document.getElementById('payment-price').innerText;
+        const esBinance = metodoPagoSeleccionado === 'binance';
+        const precioActual = formatearBs(selectedPackPrecio); // siempre se guarda en Bs, sin importar el método de pago
 
-        if(!idField.value || !mailField.value || !refField.value || !fileField.files[0]) return alert("Por favor complete todos los campos");
+        if (!idField.value || !mailField.value || !refField.value) {
+            return alert("Por favor completa todos los campos");
+        }
+        if (!esBinance && !fileField.files[0]) {
+            return alert("Por favor sube tu comprobante de pago");
+        }
         loader.style.display = "block";
         loader.innerText = "PROCESANDO SOLICITUD... NO CIERRE LA PÁGINA";
-        
+
         try {
-            const file = fileField.files[0];
-            const fileName = `pagos/${Date.now()}_${idField.value}.png`;
-            await _supabase.storage.from('Comprobantes').upload(fileName, file);
-            const { data: urlData } = _supabase.storage.from('Comprobantes').getPublicUrl(fileName);
-            
+            let captureUrl = null;
+            if (!esBinance) {
+                const file = fileField.files[0];
+                const fileName = `pagos/${Date.now()}_${idField.value}.png`;
+                await _supabase.storage.from('Comprobantes').upload(fileName, file);
+                const { data: urlData } = _supabase.storage.from('Comprobantes').getPublicUrl(fileName);
+                captureUrl = urlData.publicUrl;
+            }
+
             await _supabase.from("ventas").insert([{
                 player_id: idField.value, paquete: selectedPackValue, monto_bs: precioActual,
-                email_cliente: mailField.value, referencia: refField.value, capture_url: urlData.publicUrl, status: 'pendiente'
+                email_cliente: mailField.value, telefono_cliente: telefonoCompleto(),
+                referencia: refField.value, capture_url: captureUrl, status: 'pendiente',
+                metodo_pago: metodoPagoSeleccionado, codigo_verificacion: codigoVerificacionActual
             }]);
 
             await emailjs.send('servicio_irecarga', 'template_0pqg9v7', {
                 to_email: mailField.value, player_id: idField.value, paquete: selectedPackValue,
-                monto_bs: precioActual, referencia: refField.value, capture_url: urlData.publicUrl
+                monto_bs: precioActual, referencia: refField.value, capture_url: captureUrl || ''
             });
-            
+
             loader.innerText = "✅ ENVIADO CON ÉXITO";
-            setTimeout(() => { 
+            setTimeout(() => {
+                cerrarConfirmacion();
                 document.getElementById('modal-diamonds').innerText = selectedPackValue;
                 document.getElementById('exit-modal').style.display = 'flex';
                 loader.style.display = "none";
             }, 1000);
         } catch (err) {
+            console.error(err);
             alert("Error al procesar la recarga.");
             loader.style.display = "none";
         }
